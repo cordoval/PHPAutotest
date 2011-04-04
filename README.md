@@ -22,10 +22,18 @@ Después de esto ya estás listo para ejecutar unos cuantos tests:
 
     autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php
     
+Si ejecutas *autotest* a secas verás las instrucciones de uso con sus *flags* y opciones.
+
 # Algunas notas
 
 En mi máquina OSx he encontrado que es muy conveniente ejecutar el script desde el directorio donde tengo mi fichero de configuración *phpunit.xml*. De este modo, me aprovecho de cualquier *bootstraping* configurado en el mismo. Sin embargo, este truco no funciona en Ubuntu, aunque aun no he hecho suficientes pruebas.
 
 # ¡Colabora!
 
+## Shell-Scription
+
 No soy experto en *shell-scripting* (evidente si lees el código del script). Si tienes algún tipo de conocimiento o crees que puedes mejorar el rendimiento/eficiencia/corrección del script, hazte un fork y hazme un pull request. Estaré encantado de aplicar cualquier aportación 
+
+## Instalador
+
+Si sabes cómo convertir esto en algo instalable, será un auténtico placer escuchar tus ideas sobre cómo automatizar las instrucciones de despliegue.
