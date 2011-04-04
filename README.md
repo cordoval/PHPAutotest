@@ -11,17 +11,14 @@ También puedes activar una función text-to-speech que lee la notificación
  
 # Instrucciones
  
- 1 Clona el repositorio en algún sitio tranquilo de tu Linux/Mac. Si no te decides, */opt/autotest* puede ser un buen sitio
+Clona el repositorio en algún sitio tranquilo de tu Linux/Mac. Si no te decides, */opt/autotest* puede ser un buen sitio
     git clone git://github.com/Programania/autotest-phpunit.git /opt/autotest-phpunit
- 2 Haz el script ejecutable
+Haz el script ejecutable
     chmod +x /opt/autotest-phpunit/autotest.sh
- 3 Enlaza el script en /usr/bin en OSx y en Linux para todos los usuario (o si prefieres, en Linux puedes hacerlo en ~/bin solo para ti)
+Enlaza el script en /usr/bin en OSx y en Linux para todos los usuario (o si prefieres, en Linux puedes hacerlo en ~/bin solo para ti)
     ln -s /opt/autotest-phpunit/autotest.sh /usr/bin
-
 Después de esto ya estás listo para ejecutar unos cuantos tests:
-
-    autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php
-    
+    autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php  
 Si ejecutas *autotest* a secas verás las instrucciones de uso con sus *flags* y opciones.
 
 # Algunas notas
