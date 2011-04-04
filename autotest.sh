@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Optional configuration
 delay=1
 title="PHPUnit Test Monitor"
-
-# Script internals
 OPTIONS=""
 notificator=""
 soundAvailable=0
