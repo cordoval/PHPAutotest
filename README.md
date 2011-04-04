@@ -30,7 +30,7 @@ En mi máquina OSx he encontrado que es muy conveniente ejecutar el script desde
 
 # ¡Colabora!
 
-## Shell-Scription
+## Shell-Scripting
 
 No soy experto en *shell-scripting* (evidente si lees el código del script). Si tienes algún tipo de conocimiento o crees que puedes mejorar el rendimiento/eficiencia/corrección del script, hazte un fork y hazme un pull request. Estaré encantado de aplicar cualquier aportación 
 
