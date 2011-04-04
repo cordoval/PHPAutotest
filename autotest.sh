@@ -174,6 +174,16 @@ notifyGnome()
   fi
 }
 
+notifyKDE()
+{
+  typeset message="$*"
+  kdialog --passivepopup "${message}" --title="${title}" 2
+  if [[ $sound == 1 ]]
+  then
+    say "${message}"
+  fi
+}
+
 notifyGrowl()
 {
   typeset message="$*"
