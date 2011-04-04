@@ -16,7 +16,7 @@ Clona el repositorio en algún sitio tranquilo de tu Linux/Mac. Si no te decides
 Haz el script ejecutable
     chmod +x /opt/autotest-phpunit/autotest.sh
 Enlaza el script en /usr/bin en OSx y en Linux para todos los usuario (o si prefieres, en Linux puedes hacerlo en ~/bin solo para ti)
-    ln -s /opt/autotest-phpunit/autotest.sh /usr/bin
+    ln -s /opt/autotest-phpunit/autotest.sh /usr/bin/autotest
 Después de esto ya estás listo para ejecutar unos cuantos tests:
     autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php  
 Si ejecutas *autotest* a secas verás las instrucciones de uso con sus *flags* y opciones.
