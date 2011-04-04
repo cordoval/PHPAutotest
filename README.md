@@ -1,4 +1,4 @@
-# Autotest
+# Autotest PHPUnit
 
 Este script monitoriza ficheros con tests de PHPUnit y los ejecuta cada vez que son modificados.
 
