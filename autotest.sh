@@ -74,7 +74,7 @@ messageUsage()
 messageWait()
 {
   echo ""
-  echo "Waiting for changes in test file"
+  echo "Waiting for changes in test file. Press 'r' key to force test execution"
   echo "(Press ctrl+c to stop this script)"
   echo ""
 }
@@ -117,8 +117,11 @@ errorFileDoesNotExist()
 
 waitOneCicle()
 {
-  sleep $delay
-  messageDot
+  read -p"." -t1 -n1 keystroke
+  if [[ "$keystroke" == "r" ]]
+  then
+    executeTest
+  fi
 }
 
 checkFileMTime() 
