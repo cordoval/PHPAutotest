@@ -142,9 +142,9 @@ checkFileMTime()
 executeTest()
 {
   messageExecution
-  outcome=`phpunit --color "$file" | tail -n2`
+  outcome=`phpunit --color "$file"`
   echo "${outcome}"
-  notify "${outcome}"
+  notify `echo "${outcome}" | tail -n2`
   messageWait
 }
 
