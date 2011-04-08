@@ -118,7 +118,7 @@ errorFileDoesNotExist()
 waitOneCicle()
 {
   read -p"." -t1 -n1 keystroke
-  if [[ "$keystroke" == "r" ]]
+  if [[ "$?" -eq 0  &&  "$keystroke" == "r" ]]
   then
     executeTest
   fi
