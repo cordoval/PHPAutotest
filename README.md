@@ -1,36 +1,21 @@
-# Autotest PHPUnit
+# Autotest PHPUnit/PHPSpec
 
-Este script monitoriza ficheros con tests de PHPUnit y los ejecuta cada vez que son modificados.
+Monitors files with PHPUnit/PHPSpec tests and executes them each time they are modified.
 
-Además, se comunica con los principales servicios de notificaciones de escritorio:
+##Instructions:
 
- - OSx: Mediante Growl (no hace falta instalarse growlnotify)
- - Linux: En Gnome y KDE
- 
-También puedes activar una función text-to-speech que lee la notificación
- 
-# Instrucciones
- 
-Clona el repositorio en algún sitio tranquilo de tu Linux/Mac. Si no te decides, */opt/autotest* puede ser un buen sitio
-    git clone git://github.com/Programania/autotest-phpunit.git /opt/autotest-phpunit
-Haz el script ejecutable
-    chmod +x /opt/autotest-phpunit/autotest.sh
-Enlaza el script en /usr/bin en OSx y en Linux para todos los usuario (o si prefieres, en Linux puedes hacerlo en ~/bin solo para ti)
-    ln -s /opt/autotest-phpunit/autotest.sh /usr/bin/autotest
-Después de esto ya estás listo para ejecutar unos cuantos tests:
-    autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php  
-Si ejecutas *autotest* a secas verás las instrucciones de uso con sus *flags* y opciones.
+```php
+sudo apt-get install libnotify-bin
+sudo apt-get install inotify-tools
+git clone git://github.com/cordoval/autotest-phpunit.git /opt/autotest-phpunit
+chmod +x /opt/autotest-phpunit/autotest.sh
+chmod +x /opt/autotest-phpunit/autotest.php
+ln -s /opt/autotest-phpunit/autotest.sh /usr/bin/autotest
+ln -s /opt/autotest-phpunit/autotest.php /usr/bin/autotest2
+autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php
+autotest2 NewBowlingGameSpec.php
+```
 
-# Algunas notas
+##Requirements
 
-En mi máquina OSx he encontrado que es muy conveniente ejecutar el script desde el directorio donde tengo mi fichero de configuración *phpunit.xml*. De este modo, me aprovecho de cualquier *bootstraping* configurado en el mismo. Sin embargo, este truco no funciona en Ubuntu, aunque aun no he hecho suficientes pruebas.
-
-# ¡Colabora!
-
-## Shell-Scripting
-
-No soy experto en *shell-scripting* (evidente si lees el código del script). Si tienes algún tipo de conocimiento o crees que puedes mejorar el rendimiento/eficiencia/corrección del script, hazte un fork y hazme un pull request. Estaré encantado de aplicar cualquier aportación 
-
-## Instalador
-
-Si sabes cómo convertir esto en algo instalable, será un auténtico placer escuchar tus ideas sobre cómo automatizar las instrucciones de despliegue.
+This script requires bash shell
