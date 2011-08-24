@@ -7,81 +7,82 @@ do {
     // check for exit command or something @TODO add
 
 } while ();
-?>
 
-messageUsage()
+public function messageUsage()
 {
-  echo ""
-  echo "Usage: \$ autotest [options] [flags] file"
-  echo ""
-  echo "Options:"
-  echo "  --custom-delay <seconds>  Sets a custom delay of <seconds> seconds. Default: 1"
-  echo "  --custom-title \"<title>\"  Sets a custom <title> title for the notifications. Default \"PHPUnit Test Monitor\""
-  echo ""
-  echo "Flags:"
-  echo "  --with-sound        Enables text-to-speech where available (espeak & aplay needed)"
-  echo "  --no-notifications  Disables notifications completely"
-  echo ""
-  echo "Notice: It's recommended to launch this script from where a phpunit.xml configuration file is located in order to benefit of any bootstraping setup that could be made."
-  echo ""
-  echo "This script has been tested in a OSx system and in a Ubuntu 10.10 system"
-  exit 1
+  echo "\n";
+  echo "Usage: \$ autotest [options] [flags] file";
+  echo "\n";
+  echo "Options:";
+  echo "  --custom-delay <seconds>  Sets a custom delay of <seconds> seconds. Default: 1";
+  echo "  --custom-title \"<title>\"  Sets a custom <title> title for the notifications. Default \"PHPUnit Test Monitor\"";
+  echo "\n";
+  echo "Flags:";
+  echo "  --with-sound        Enables text-to-speech where available (espeak & aplay needed)";
+  echo "  --no-notifications  Disables notifications completely";
+  echo "\n";
+  echo "Notice: It's recommended to launch this script from where a phpunit.xml configuration file is located in order to benefit of any bootstraping setup that could be made.";
+  echo "\n"
+  echo "This script has been tested in a OSx system and in a Ubuntu 10.10 system";
+  return 1;
 }
 
-messageWait()
+public function messageWait()
 {
-  echo ""
-  echo "Waiting for changes in test file. Press 'r' key to force test execution"
-  echo "(Press ctrl+c to stop this script)"
-  echo ""
+  echo "\n";
+  echo "Waiting for changes in test file. Press 'r' key to force test execution";
+  echo "(Press ctrl+c to stop this script)";
+  echo "\n";
 }
 
-messageExecution()
+public function messageExecution()
 {
-  clear
-  echo $(date)
-  echo "Executing tests in ${file}"
-  echo ""
+  // @TODO here issue a "clear"
+  echo $(date);
+  echo "Executing tests in ${file}";
+  echo "\n";
+  return 1;
 }
 
-messageDot()
+public function messageDot()
 {
-  echo -ne "."
+  // @TODO what is -ne? o repeating the ........ of phpspec :D ?
+  echo -ne ".";
 }
 
-errorInvalidSystem()
+public function errorInvalidSystem()
 {
-  echo ""
-  echo "Error: This script can't be executed in your system."
-  echo ""
+  echo "\n";
+  echo "Error: This script can't be executed in your system.";
+  echo "\n";
 }
 
-errorInvalidNotificator()
+public function errorInvalidNotificator()
 {
-  echo ""
-  echo "Your system is a Linux box but we can't find any valid notification service."
-  echo ""
-  echo "Please install kdialog or notify-send, or start this script again with --no-notifications flag"
-  echo ""
+  echo "\n";
+  echo "Your system is a Linux box but we can't find any valid notification service.";
+  echo "\n";
+  echo "Please install kdialog or notify-send, or start this script again with --no-notifications flag";
+  echo "\n";
 }
 
-errorFileDoesNotExist()
+public function errorFileDoesNotExist()
 {
-  echo ""
-  echo "Error: File '${file}' doesn't exist"
-  echo ""
+  echo "\n";
+  echo "Error: File '${file}' doesn't exist";
+  echo "\n";
 }
 
-waitOneCicle()
+public function waitOneCicle()
 {
+  // @TODO: copy here the key stroke from keyboard (I have this ready)
   read -p"." -t1 -n1 keystroke
-  if [[ "$?" -eq 0  &&  "$keystroke" == "r" ]]
-  then
-    executeTest
-  fi
+  if ( "$?" -eq 0  &&  "$keystroke" == "r") {
+    executeTest();
+  }
 }
 
-checkFileMTime() 
+public function checkFileMTime()
 {
   case $system in
     "linux") newMTime=`ls -l --full-time ${file} 2> /dev/null | awk '{print $7}'` ;;
