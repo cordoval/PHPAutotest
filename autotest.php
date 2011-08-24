@@ -20,22 +20,26 @@ $messageFail = 'Failing Spec';
 
 while (true) {
     // adding a key prompt
-    if () {
+    if (false) {
         
     }
     exec("inotifywait -q -e modify ${class}", $text);
-    exec("phpspec \"${test}\" -c", $text);
+    exec("phpspec ${test} -c", $text);
     $output_text = trim(implode("\n", $text));
     echo $output_text."\n\n";
-    $strCommand = "phpspec \"${test}\" | tail -n1 | grep \"failure\"";
+    $strCommand = "phpspec ${test} | tail -n1 | grep \"failure\"";
     $text = '';
     exec($strCommand, $text);
     $output_text = trim(implode("\n", $text));
     if ( $output_text ) {
-        $strCommand = "notify-send --hint=string:x-canonical-private-synchronous: -i \"${iconFail}\" \"${titleFail}\" \"${messageFail}\"";
+        $strCommand = buildNotifyCommand($iconFail, $titleFail, $messageFail);
     } else {
-        $strCommand = "notify-send --hint=string:x-canonical-private-synchronous: -i \"${iconPass}\" \"${titlePass}\" \"${messagePass}\"";
+        $strCommand = buildNotifyCommand($iconPass, $titlePass, $messagePass);
     }
     exec($strCommand, $text);
+}
+
+function buildNotifyCommand($icon, $title, $message) {
+    return "notify-send --hint=string:x-canonical-private-synchronous: -i \"${icon}\" \"${title}\" \"${message}\"";
 }
 ?>
