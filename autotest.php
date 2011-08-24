@@ -122,93 +122,10 @@ public function notify()
   typeset message="$*"
   message=$(printf %q $message | sed 's/\\//g' | sed 's/\$//g' | sed 's/E\[0mE\[37;41mE\[2K//g' | sed 's/E\[30;42mE\[2K//g' | sed 's/E\[0mE\[2K//g' | sed "s/'//g" | sed 's/,A/ \(A/g' | sed 's/\./)/g' | sed 's/,/, /g' | sed 's/tests/ tests/g' | sed 's/assertions/ assertions/g' | sed 's/OK/OK /g')
   case $notificator in
-    "growl") notifyGrowl "${message}" ;;
     "gnome") notifyGnome "${message}" ;;
-    "kde") notifyKDE "${message}" ;;
   esac
-}
-
-say()
-{
-  typeset message="$*"
-  espeak -a 200 -p 90 -s 155 -k10 -w /tmp/phpunit_notification.wav "${message}"
-  (aplay /tmp/phpunit_notification.wav > /dev/null 2>&1) &
-  esac
-}
-
-notifyGnome()
-{
-  typeset message="$*"
   notify-send -t 2000 "${title}" "${message}"
+  //espeak -a 200 -p 90 -s 155 -k10 -w /tmp/phpunit_notification.wav "${message}"
+  //(aplay /tmp/phpunit_notification.wav > /dev/null 2>&1) &
 }
-
-notifyKDE()
-{
-  typeset message="$*"
-  kdialog --passivepopup "${message}" --title="${title}" 2
-}
-
-notifyGrowl()
-{
-  typeset message="$*"
-  (osascript <<EOD
-tell application "GrowlHelperApp"
-set the allNotificationsList to {"${title}"}
-set the enabledNotificationsList to {"${title}"}
-register as application "${title}" all notifications allNotificationsList default notifications enabledNotificationsList icon of application "Terminal.app"
-notify with name "${title}" title "${title}" description "${message}" application name "${title}" sticky no priority 0
-end tell
-EOD
-) &
-}
-
-debugConfiguration()
-{
-  echo "OPTIONS: ${OPTIONS}"
-  echo ""
-  echo "delay: ${delay}"
-  echo "title ${title}"
-  echo "notificator: ${notificator}"
-  echo "soundAvailable: ${soundAvailable}"
-  echo "sound: ${sound}"
-  echo "system: ${system}"
-  echo "file: ${file}"
-  echo "oldMTime: ${oldMTime}"
-  echo "newMTime: ${newMTime}"
-}
-
-# Main thread
-#{
-  init
-  if [[ $# = 0 ]];
-  then
-    messageUsage
-    exit 1
-  fi
-  while [[ "X$1" = X-* ]]
-  do
-    if [[ "X$1" = X--no-notifications ]]; then
-      notificator="disabled"
-      sound=0
-    elif [[ "X$1" = X--with-sound ]]; then
-      if [[ $soundAvailable == 1 ]]
-      then
-	sound=1
-      fi
-    elif [[ "X$1" = X--custom-delay* ]]; then
-      delay="$2"
-      OPTIONS="$OPTIONS $1"
-      shift
-    elif [[ "X$1" = X--custom-title* ]]; then
-      title="$2"
-      OPTIONS="$OPTIONS $1"
-      shift
-    else
-      break;
-    fi
-    OPTIONS="$OPTIONS $1"
-    shift
-  done
-  file="$1"
-  doTheLoop
-#}
+?>
