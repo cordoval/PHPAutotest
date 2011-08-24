@@ -7,35 +7,39 @@
  * a Symfony2 Command
  */
 
-$classFile = "NewBowlingGameSpec.php";
-$class = "NewBowlingGameSpec.php";
+$classFile = 'NewBowlingGameSpec.php';
+$class = 'NewBowlingGameSpec.php';
 $test = $class;
 
-$iconPass = "/usr/share/icons/Humanity/actions/48/dialog-apply.svg";
-$iconFail = "/usr/share/icons/Humanity/emblems/48/emblem-important.svg";
-$titlePass = "Test Pass";
-$titleFail = "Test Fail";
-$messagePass= "Passing Spec";
-$messageFail = "Failing Spec";
+$iconPass = '/usr/share/icons/Humanity/actions/48/dialog-apply.svg';
+$iconFail = '/usr/share/icons/Humanity/emblems/48/emblem-important.svg';
+$titlePass = 'Test Pass';
+$titleFail = 'Test Fail';
+$messagePass= 'Passing Spec';
+$messageFail = 'Failing Spec';
 
 while (true) {
     // adding a key prompt
-    if () {
+    if (false) {
         
     }
-    exec('inotifywait -q -e modify '.$class, $text);
-    exec('phpspec "'.$test.'" -c', $text);
+    exec("inotifywait -q -e modify ${class}", $text);
+    exec("phpspec ${test} -c", $text);
     $output_text = trim(implode("\n", $text));
     echo $output_text."\n\n";
-    $strCommand = 'phpspec "'.$test.'" | tail -n1 | grep "failure"';
+    $strCommand = "phpspec ${test} | tail -n1 | grep \"failure\"";
     $text = '';
     exec($strCommand, $text);
     $output_text = trim(implode("\n", $text));
     if ( $output_text ) {
-        $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconFail.'" "'.$titleFail.'" "'.$messageFail.'"';
+        $strCommand = buildNotifyCommand($iconFail, $titleFail, $messageFail);
     } else {
-        $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconPass.'" "'.$titlePass.'" "'.$messagePass.'"';
+        $strCommand = buildNotifyCommand($iconPass, $titlePass, $messagePass);
     }
     exec($strCommand, $text);
+}
+
+function buildNotifyCommand($icon, $title, $message) {
+    return "notify-send --hint=string:x-canonical-private-synchronous: -i \"${icon}\" \"${title}\" \"${message}\"";
 }
 ?>
