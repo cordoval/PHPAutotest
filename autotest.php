@@ -7,11 +7,12 @@
  * a Symfony2 Command
  */
 
-require_once 'lib/Autotest.php';
+require_once 'lib/Autotest/Factory.php';
 
 checkArguments($argv);
 
-$autotest = new Autotest($argv[1]);
+$autotest = Autotest\Factory::create($argv[1], $argv[2]);
+print_r($autotest);
 while (true) {
     $autotest->executeTest();
     while (!$autotest->canRetry()) {
@@ -20,7 +21,18 @@ while (true) {
 }
 
 function checkArguments($argv) {
-    if (count($argv) != 2)
-        throw new Exception("You need to provide an argument with the file you want to test");
+    if (count($argv) != 3)
+        printUsage() && die();
+}
+
+function printUsage() {
+    echo <<<EOT
+   
+Error: Wrong argument count
+
+Usage: autotest <phpunit|phpspec|behat> <file>
+
+
+EOT;
 }
 ?>
