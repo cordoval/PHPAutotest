@@ -19,6 +19,10 @@ $messagePass= 'Passing Spec';
 $messageFail = 'Failing Spec';
 
 while (true) {
+    // adding a key prompt
+    if () {
+        
+    }
     exec("inotifywait -q -e modify ${class}", $text);
     exec("phpspec \"${test}\" -c", $text);
     $output_text = trim(implode("\n", $text));
