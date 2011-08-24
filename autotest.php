@@ -12,8 +12,7 @@ $class = 'NewBowlingGameSpec.php';
 $test = $class;
 
 $fileMTime = getFileMTime($test);
-echo $fileMTime;
-die();
+
 $iconPass = '/usr/share/icons/Humanity/actions/48/dialog-apply.svg';
 $iconFail = '/usr/share/icons/Humanity/emblems/48/emblem-important.svg';
 $titlePass = 'Test Pass';
@@ -22,21 +21,18 @@ $messagePass = 'Passing Spec';
 $messageFail = 'Failing Spec';
 
 while (true) {
-    exec("phpspec ${test} -c", $text);
-    $output_text = trim(implode("\n", $text));
-    echo $output_text . "\n\n";
-    $strCommand = "phpspec ${test} -c | tail -n1 | grep \"failure\"";
-    $text = '';
-    exec($strCommand, $text);
-    $output_text = trim(implode("\n", $text));
-    if ($output_text) {
+    $output = shell_exec("phpspec ${test} -c");
+    echo "${output}\n\n";
+    $lines = explode("\n", $output);
+    if (strpos(array_pop($lines), 'failure') !== false) {
         $strCommand = buildNotifyCommand($iconFail, $titleFail, $messageFail);
     } else {
         $strCommand = buildNotifyCommand($iconPass, $titlePass, $messagePass);
     }
     exec($strCommand, $text);
-    watchKeyPress();
-    waitForFileChange();
+//    watchForKeypress();
+//    waitForFileChange();
+    sleep(1);
 }
 
 function buildNotifyCommand($icon, $title, $message) {
