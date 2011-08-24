@@ -1,4 +1,8 @@
-# Autotest PHPUnit/PHPSpec
+# PHPAutotest
+
+This application monitors your tests and executes them whenever you make any changes to them.
+
+It actually supports the main
 
 Monitors files with PHPUnit/PHPSpec tests and executes them each time they are modified.
 
