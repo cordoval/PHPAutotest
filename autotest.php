@@ -12,7 +12,7 @@ $autotest = new Autotest("NewBowlingGameSpec.php");
 while (true) {
     $autotest->executeTest();
     while (!$autotest->canRetry()) {
-        // sleep is actually made while prompting for retry key press
+        // we wait while prompting for retry key press
     }
 }
 
@@ -23,6 +23,10 @@ class Autotest {
     const TITLE_FAIL = 'Test Fail';
     const MESSAGE_PASS = 'Passing Spec';
     const MESSAGE_FAIL = 'Failing Spec';
+    
+    const NOTIFY_COMMAND_TEMPLATE = 'notify-send --hint=string:x-canonical-private-synchronous: -i "%s" "%s" "%s"';
+    const FILEMTIME_COMMAND_LINUX = 'ls -l --full-time %s 2> /dev/null | awk \'{print $7}\'';
+    const FILEMTIME_COMMAND_OSX = 'ls -lT %s 2> /dev/null | awk \'{print $8}\'';
     
     private $file;
     private $fileMTime;
@@ -74,8 +78,8 @@ class Autotest {
     
     private function notifyCommandFactory($hasFailed) {
         if ($hasFailed)
-            return sprintf("notify-send --hint=string:x-canonical-private-synchronous: -i \"%s\" \"%s\" \"%s\"", Autotest::ICON_FAIL, Autotest::TITLE_FAIL, Autotest::MESSAGE_FAIL);
-        return sprintf("notify-send --hint=string:x-canonical-private-synchronous: -i \"%s\" \"%s\" \"%s\"", Autotest::ICON_PASS, Autotest::TITLE_PASS, Autotest::MESSAGE_PASS);
+            return sprintf(Autotest::NOTIFY_COMMAND_TEMPLATE, Autotest::ICON_FAIL, Autotest::TITLE_FAIL, Autotest::MESSAGE_FAIL);
+        return sprintf(Autotest::NOTIFY_COMMAND_TEMPLATE, Autotest::ICON_PASS, Autotest::TITLE_PASS, Autotest::MESSAGE_PASS);
     }
     
     private function hasFailed($lines) {
@@ -83,16 +87,16 @@ class Autotest {
     }
 
     private function getFileMTime() {
-        $command = sprintf($this->fileMTimeCommandFactory($this->getSystem()), $this->file);
+        $command = sprintf($this->getFileMTimeCommandFactoryFor($this->getSystem()), $this->file);
         return exec($command);
     }
 
-    private function fileMTimeCommandFactory($os) {
+    private function getFileMTimeCommandFactoryFor($os) {
         switch ($os) {
             case 'linux':
-                return "ls -l --full-time %s 2> /dev/null | awk '{print $7}'";
+                return Autotest::FILEMTIME_COMMAND_LINUX;
             case 'osx':
-                return "ls -lT %s 2> /dev/null | awk '{print $8}'";
+                return Autotest::FILEMTIME_COMMAND_OSX;
         }
     }
 
