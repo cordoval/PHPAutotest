@@ -5,6 +5,9 @@ Monitors files with PHPUnit/PHPSpec tests and executes them each time they are m
 ##Instructions:
 
 ```php
+sudo pear channel-discover pear.behat.org
+sudo pear channel-discover pear.symfony.com
+sudo pear install -a behat/behat
 sudo apt-get install libnotify-bin
 sudo apt-get install inotify-tools
 git clone git://github.com/cordoval/autotest-phpunit.git /opt/autotest-phpunit
