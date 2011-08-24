@@ -19,7 +19,7 @@ class DescribeNewBowlingGame extends \PHPSpec\Context
             // someone is really bad at bowling!
             $this->bowling->hit(0);
         }
-        $this->bowling->score->should->equal(0);
+        $this->bowling->score->should->equal(1);
     }
 
 }
