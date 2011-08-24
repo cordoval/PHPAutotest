@@ -3,6 +3,8 @@
 /*
  * This version of autotest.php is geared towards the usage
  * with phpspec (see phpspec.net)
+ * The second step is to turn this script now php into
+ * a Symfony2 Command
  *
  *
  */
