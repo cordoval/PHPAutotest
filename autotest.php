@@ -19,19 +19,20 @@ $messagePass= 'Passing Spec';
 $messageFail = 'Failing Spec';
 
 while (true) {
-    // adding a key prompt
-    if (false) {
-        
-    }
+
+    $text = '';
     exec("inotifywait -q -e modify ${class}", $text);
+    $text = '';
     exec("phpspec ${test} -c", $text);
+    // serach on $output_text if last line has failure word
+    // get last sentence
+    $fail = $text[sizeof($text)-1];
+    preg_match('/^failure/', $fail, $matches);
+    print_r($matches);
     $output_text = trim(implode("\n", $text));
     echo $output_text."\n\n";
-    $strCommand = "phpspec ${test} | tail -n1 | grep \"failure\"";
-    $text = '';
-    exec($strCommand, $text);
-    $output_text = trim(implode("\n", $text));
-    if ( $output_text ) {
+    //$strCommand = "phpspec ${test} | tail -n1 | grep \"failure\"";
+    if ( $fail ) {
         $strCommand = buildNotifyCommand($iconFail, $titleFail, $messageFail);
     } else {
         $strCommand = buildNotifyCommand($iconPass, $titlePass, $messagePass);
