@@ -16,6 +16,7 @@ class Autotest {
     private $fileMTime;
 
     public function __construct($file) {
+        $this->checkFile($file);
         $this->file = $file;
         $this->fileMTime = $this->getFileMTime();
     }
@@ -29,6 +30,11 @@ class Autotest {
 
     public function canRetry() {
         return $this->fileChanged() || $this->retryKeyPressed();
+    }
+
+    private function checkFile($file) {
+        if (!file_exists($file) || !is_readable($file))
+            throw new Exception("{$file} doesn't exist or is not readable");
     }
 
     private function fileChanged() {

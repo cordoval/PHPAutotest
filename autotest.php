@@ -9,8 +9,9 @@
 
 require_once 'lib/Autotest.php';
 
-$autotest = new Autotest("NewBowlingGameSpec.php");
+checkArguments($argv);
 
+$autotest = new Autotest($argv[1]);
 while (true) {
     $autotest->executeTest();
     while (!$autotest->canRetry()) {
@@ -18,5 +19,8 @@ while (true) {
     }
 }
 
-
+function checkArguments($argv) {
+    if (count($argv) != 2)
+        throw new Exception("You need to provide an argument with the file you want to test");
+}
 ?>
