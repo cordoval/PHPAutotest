@@ -7,69 +7,98 @@
  * a Symfony2 Command
  */
 
-$classFile = 'NewBowlingGameSpec.php';
-$class = 'NewBowlingGameSpec.php';
-$test = $class;
-
-$fileMTime = getFileMTime($test);
-
-$iconPass = '/usr/share/icons/Humanity/actions/48/dialog-apply.svg';
-$iconFail = '/usr/share/icons/Humanity/emblems/48/emblem-important.svg';
-$titlePass = 'Test Pass';
-$titleFail = 'Test Fail';
-$messagePass = 'Passing Spec';
-$messageFail = 'Failing Spec';
+$autotest = new Autotest("NewBowlingGameSpec.php");
 
 while (true) {
-    $output = shell_exec("phpspec ${test} -c");
-    echo "${output}\n\n";
-    $lines = explode("\n", $output);
-    if (strpos(array_pop($lines), 'failure') !== false) {
-        $strCommand = buildNotifyCommand($iconFail, $titleFail, $messageFail);
-    } else {
-        $strCommand = buildNotifyCommand($iconPass, $titlePass, $messagePass);
-    }
-    exec($strCommand, $text);
-//    watchForKeypress();
-//    waitForFileChange();
-    sleep(1);
-}
-
-function buildNotifyCommand($icon, $title, $message) {
-    return "notify-send --hint=string:x-canonical-private-synchronous: -i \"${icon}\" \"${title}\" \"${message}\"";
-}
-
-function watchForKeypress() {
-    readline_callback_handler_install('Press \'r\' key to launch it again', 'execute');
-}
-
-function waitForFileChange($file) {
-    $command = getFileMTimeCommand($file);
-    do {
-        $currentFileMTime = getFileMTime($file);
-        echo ".";
-        sleep(1);
-    } while ($currentFileMTime != $fileMTime);
-    $fileMTime = $currentFileMTime;
-}
-
-function getFileMTime($file) {
-    return exec(sprintf(getFileMTimeCommandTemplate($file), $file));
-}
-
-function getFileMTimeCommandTemplate($file) {
-    switch (getSystem()) {
-        case 'linux': 
-            return "ls -l --full-time %s 2> /dev/null | awk '{print $7}'";
-            break;
-        case 'osx': 
-            return "ls -lT %s 2> /dev/null | awk '{print $8}'";
-            break;
+    $autotest->executeTest();
+    while (!$autotest->canRetry()) {
+        // sleep is actually made while prompting for retry key press
     }
 }
 
-function getSystem() {
-    return strtolower(PHP_OS);
-}
+class Autotest {
+    const ICON_PASS = '/usr/share/icons/Humanity/actions/48/dialog-apply.svg';
+    const ICON_FAIL = '/usr/share/icons/Humanity/emblems/48/emblem-important.svg';
+    const TITLE_PASS = 'Test Pass';
+    const TITLE_FAIL = 'Test Fail';
+    const MESSAGE_PASS = 'Passing Spec';
+    const MESSAGE_FAIL = 'Failing Spec';
+    
+    private $file;
+    private $fileMTime;
+    
+    public function __construct($file) {
+        $this->file = $file;
+        $this->fileMTime = $this->getFileMTime();
+    }
 
+    public function executeTest() {
+        $this->clearScreen();
+        $output = shell_exec("phpspec {$this->file} -c");
+        $this->renderOutput($output);
+        $this->notifyResult($output);
+    }
+    
+    public function canRetry() {
+        return $this->fileChanged() || $this->retryKeyPressed();
+    }
+    
+    private function fileChanged() {
+        $newFileMTime = $this->getFileMTime($this->file);
+        if ($newFileMTime != $this->fileMTime) {
+            $this->fileMTime = $newFileMTime;
+            return true;
+        }
+        return false;
+    }
+
+    private function retryKeyPressed() {
+        $keystroke = shell_exec('bash scripts/readchar');
+        $keystroke = trim(str_replace("\n", "", $keystroke));
+        return 'r' == $keystroke;
+    }
+    
+    private function clearScreen() {
+        system('bash scripts/clear');
+    }
+    
+    private function renderOutput($output) {
+        echo "{$output}\n\n";
+    }
+    
+    private function notifyResult($output) {
+        $lines = explode("\n", $output);
+        $command = $this->notifyCommandFactory($this->hasFailed($lines));
+        exec($command);
+    }
+    
+    private function notifyCommandFactory($hasFailed) {
+        if ($hasFailed)
+            return sprintf("notify-send --hint=string:x-canonical-private-synchronous: -i \"%s\" \"%s\" \"%s\"", Autotest::ICON_FAIL, Autotest::TITLE_FAIL, Autotest::MESSAGE_FAIL);
+        return sprintf("notify-send --hint=string:x-canonical-private-synchronous: -i \"%s\" \"%s\" \"%s\"", Autotest::ICON_PASS, Autotest::TITLE_PASS, Autotest::MESSAGE_PASS);
+    }
+    
+    private function hasFailed($lines) {
+        return strpos($lines[sizeof($lines) - 2], 'failure') !== false;
+    }
+
+    private function getFileMTime() {
+        $command = sprintf($this->fileMTimeCommandFactory($this->getSystem()), $this->file);
+        return exec($command);
+    }
+
+    private function fileMTimeCommandFactory($os) {
+        switch ($os) {
+            case 'linux':
+                return "ls -l --full-time %s 2> /dev/null | awk '{print $7}'";
+            case 'osx':
+                return "ls -lT %s 2> /dev/null | awk '{print $8}'";
+        }
+    }
+
+    private function getSystem() {
+        return strtolower(PHP_OS);
+    }
+
+}
 ?>
