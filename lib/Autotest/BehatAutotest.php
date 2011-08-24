@@ -4,11 +4,11 @@ namespace Autotest;
 
 require_once 'Autotest.php';
 
-class PHPUnitAutotest extends Autotest {
+class BehatAutotest extends Autotest {
 
     public function executeTest() {
         $this->clearScreen();
-        $output = shell_exec("phpunit --colors {$this->file}");
+        $output = shell_exec("behat {$this->file} --colors");
         $this->renderOutput($output);
         $this->notifyResult($output);
     }
@@ -19,13 +19,12 @@ class PHPUnitAutotest extends Autotest {
 
     protected function notifyResult($output) {
         $lines = explode("\n", $output);
-        $hasFailed = $this->hasFailed($lines);
-        $command = $this->notifyCommandFactory($hasFailed);
+        $command = $this->notifyCommandFactory($this->hasFailed($lines));
         exec($command);
     }
 
     protected function hasFailed($lines) {
-        return strpos($lines[sizeof($lines) - 3], 'FAILURES') !== false;
+        return strpos($lines[sizeof($lines) - 3], 'failed') !== false;
     }
 
 }

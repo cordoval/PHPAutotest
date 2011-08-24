@@ -1,8 +1,6 @@
 <?php
 
-namespace Autotest\Demo;
-
-require "SomeClass.php";
+require 'SomeClass.php';
 
 class SomeClassTests extends \PHPUnit_Framework_TestCase {
 

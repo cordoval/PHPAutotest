@@ -3,9 +3,11 @@ namespace Autotest;
 
 require_once 'lib/Autotest/PHPUnitAutotest.php';
 require_once 'lib/Autotest/PHPSpecAutotest.php';
+require_once 'lib/Autotest/BehatAutotest.php';
 
 use Autotest\PHPUnitAutotest;
 use Autotest\PHPSpecAutotest;
+use Autotest\BehatAutotest;
 
 class Factory {
     const PHPUNIT = "phpunit";
@@ -19,11 +21,9 @@ class Factory {
             case Factory::PHPSPEC:
                 return new PHPSpecAutotest($file);
             case Factory::BEHAT:
-                throw new Exception("Autotest for Behat is not yet implemented");
+                return new BehatAutotest($file);
         }
         throw new Exception("Wrong framework");
     }
 
 }
-
-?>

@@ -1,2 +1,0 @@
-read -p"." -s -t1 -n1 keystroke
-echo $keystroke

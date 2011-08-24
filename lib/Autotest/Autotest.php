@@ -24,16 +24,24 @@ abstract class Autotest {
     }
 
     protected function clearScreen() {
-        system('bash scripts/clear');
+        system('bash -c "clear"');
     }
 
     public function canRetry() {
         return $this->fileChanged() || $this->retryKeyPressed();
     }
+    
+    abstract public function executeTest();
+
+    abstract protected function renderOutput($output);
+
+    abstract protected function notifyResult($output);
+
+    abstract protected function hasFailed($lines);
 
     private function checkFile($file) {
         if (!file_exists($file) || !is_readable($file))
-            throw new Exception("{$file} doesn't exist or is not readable");
+            throw new \Exception("{$file} doesn't exist or is not readable");
     }
 
     private function fileChanged() {
@@ -46,7 +54,7 @@ abstract class Autotest {
     }
 
     private function retryKeyPressed() {
-        $keystroke = shell_exec('bash scripts/readchar');
+        $keystroke = exec('bash -c "read -p\".\" -s -t1 -n1 keystroke ; echo \$keystroke"');
         $keystroke = trim(str_replace("\n", "", $keystroke));
         return 'r' == $keystroke;
     }
@@ -76,5 +84,3 @@ abstract class Autotest {
     }
 
 }
-
-?>

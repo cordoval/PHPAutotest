@@ -12,7 +12,6 @@ require_once 'lib/Autotest/Factory.php';
 checkArguments($argv);
 
 $autotest = Autotest\Factory::create($argv[1], $argv[2]);
-print_r($autotest);
 while (true) {
     $autotest->executeTest();
     while (!$autotest->canRetry()) {
@@ -21,8 +20,10 @@ while (true) {
 }
 
 function checkArguments($argv) {
-    if (count($argv) != 3)
-        printUsage() && die();
+    if (count($argv) != 3) {
+        printUsage();
+        die();
+    }
 }
 
 function printUsage() {
@@ -35,4 +36,4 @@ Usage: autotest <phpunit|phpspec|behat> <file>
 
 EOT;
 }
-?>
+

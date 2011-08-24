@@ -13,20 +13,18 @@ class PHPSpecAutotest extends Autotest {
         $this->notifyResult($output);
     }
 
-    private function renderOutput($output) {
+    protected function renderOutput($output) {
         echo "{$output}\n\n";
     }
 
-    private function notifyResult($output) {
+    protected function notifyResult($output) {
         $lines = explode("\n", $output);
         $command = $this->notifyCommandFactory($this->hasFailed($lines));
         exec($command);
     }
 
-    private function hasFailed($lines) {
+    protected function hasFailed($lines) {
         return strpos($lines[sizeof($lines) - 2], 'failure') !== false;
     }
 
 }
-
-?>
