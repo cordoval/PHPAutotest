@@ -1,4 +1,4 @@
-#!/bin/php
+#!/usr/bin/php
 <?php
 /*
  * This version of autotest.php is geared towards the usage
@@ -9,7 +9,9 @@
  *
  */
 
-$classFile = "ExampleSpec.php"
+$classFile = "NewBowlingGameSpec.php";
+$class = "NewBowlingGameSpec.php";
+$test = $class;
 
 $iconPass = "/usr/share/icons/Humanity/actions/48/dialog-apply.svg";
 $iconFail = "/usr/share/icons/Humanity/emblems/48/emblem-important.svg";
@@ -19,11 +21,16 @@ $messagePass= "Passing Spec";
 $messageFail = "Failing Spec";
 
 while (true) {
-    exec('inotifywait -q -e modify '.$class);
-    if ( exec($test." | tail -n2 | grep \"OK\"") ) {
-        exec('notify-send --hint=string:x-canonical-private-synchronous: -i '.$iconPass.' '.$titlePass.' '.$messagePass);
+    exec('inotifywait -q -e modify '.$class, $text);
+    exec('phpspec '.$test." | tail -n2 | grep \"OK\"", $text);
+    $output_text = trim(implode("\n", $text));
+    echo $output_text;
+    if ( 1 ) {
+        $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconPass.'" "'.$titlePass.'" "'.$messagePass.'"';
+        exec($strCommand, $text);
     } else {
-        exec('notify-send --hint=string:x-canonical-private-synchronous: -i '.$iconFail.' '.$titleFail.' '.$messageFail);
+        $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconFail.'" "'.$titleFail.'" "'.$messageFail.'"';
+        exec($strCommand, $text);
     }
 }
 ?>
