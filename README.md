@@ -15,3 +15,7 @@ ln -s /opt/autotest-phpunit/autotest.php /usr/bin/autotest2
 autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php
 autotest2 NewBowlingGameSpec.php
 ```
+
+##Requirements
+
+This script requires bash shell
