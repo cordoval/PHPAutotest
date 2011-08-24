@@ -2,27 +2,74 @@
 
 This application monitors your tests and executes them whenever you make any changes to them.
 
-It actually supports the main
+It actually supports the main three TDD/BDD frameworks for PHP: PHPUnit, PHPSpec and Behat
 
-Monitors files with PHPUnit/PHPSpec tests and executes them each time they are modified.
+##Framework requirements:
+
+*PHPUnit*
+
+(copied from: http://www.phpunit.de/manual/3.0/en/installation.html)
+
+```sh
+pear channel-discover pear.phpunit.de
+pear install -a phpunit/PHPUnit
+```
+
+*PHPSpec*
+
+(copied from: http://www.phpspec.net/download/)
+
+```sh
+pear channel-discover pear.phpspec.net
+pear install -a phpspec/PHPSpec
+```
+
+*Behat*
+
+(copied from: http://docs.behat.org/quick_intro.html)
+
+```sh
+pear channel-discover pear.behat.org
+pear install behat/behat
+```
+
+##Other requirements:
+
+*PHPAutotest requires bash shell*.
+
+*Linux/Gnome*
+
+You'll need to have the notification services installed on your machine
+
+```sh
+sudo apt-get install libnotify-bin
+```
+
+*KDE*
+
+Not yet implemented
+
+*OSX*
+
+Not yet implemented
 
 ##Instructions:
 
-```php
-sudo pear channel-discover pear.behat.org
-sudo pear channel-discover pear.symfony.com
-sudo pear install -a behat/behat
-sudo apt-get install libnotify-bin
-sudo apt-get install inotify-tools
-git clone git://github.com/cordoval/autotest-phpunit.git /opt/autotest-phpunit
-chmod +x /opt/autotest-phpunit/autotest.sh
-chmod +x /opt/autotest-phpunit/autotest.php
-ln -s /opt/autotest-phpunit/autotest.sh /usr/bin/autotest
-ln -s /opt/autotest-phpunit/autotest.php /usr/bin/autotest2
-autotest ~/src/proyecto-de-la-muerte/tests/ChuChuTests.php
-autotest2 NewBowlingGameSpec.php
+You can download the phar file here. Just place it somewhere, give it execution permissions and add it to your path.
+
+Also, you can clone this repository and compile the PHAR file yourself:
+
+```sh
+$ ./compile
 ```
 
-##Requirements
+##Usage:
 
-This script requires bash shell
+You need to provide 2 arguments to the application:
+
+ * The framework to use
+ * The test file or directory(Behat only) to run
+
+PHPAutotest will execute your tests, idle for 1 second and check if the file has been modified. You can also hit '*r*' key to force an execution.
+
+Also, you can hide the terminal because it will notify you with the results of the test.
