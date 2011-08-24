@@ -11,8 +11,9 @@ It actually supports the main three TDD/BDD frameworks for PHP: PHPUnit, PHPSpec
 (copied from: http://www.phpunit.de/manual/3.0/en/installation.html)
 
 ```sh
-pear channel-discover pear.phpunit.de
-pear install -a phpunit/PHPUnit
+$ sudo pear channel-discover pear.phpunit.de
+$ sudo pear channel-discover pear.symfony.com
+$ sudo pear install -a phpunit/PHPUnit
 ```
 
 *PHPSpec*
@@ -20,8 +21,9 @@ pear install -a phpunit/PHPUnit
 (copied from: http://www.phpspec.net/download/)
 
 ```sh
-pear channel-discover pear.phpspec.net
-pear install -a phpspec/PHPSpec
+$ sudo pear channel-discover pear.phpspec.net
+$ sudo pear channel-discover pear.symfony.com
+$ sudo pear install -a phpspec/PHPSpec
 ```
 
 *Behat*
@@ -29,8 +31,9 @@ pear install -a phpspec/PHPSpec
 (copied from: http://docs.behat.org/quick_intro.html)
 
 ```sh
-pear channel-discover pear.behat.org
-pear install behat/behat
+$ sudo pear channel-discover pear.behat.org
+$ sudo pear channel-discover pear.symfony.com
+$ sudo pear install behat/behat
 ```
 
 ##Other requirements:
@@ -42,7 +45,7 @@ pear install behat/behat
 You'll need to have the notification services installed on your machine
 
 ```sh
-sudo apt-get install libnotify-bin
+$ sudo apt-get install libnotify-bin
 ```
 
 *KDE*
@@ -75,7 +78,7 @@ You need to provide 2 arguments to the application:
 Example:
 
 ```sh
-./autotest phpunit demo/PHPUnit/SomeClassTests.php
+$ ./autotest phpunit demo/PHPUnit/SomeClassTests.php
 ```
 
 PHPAutotest will execute your tests, idle for 1 second and check if the file has been modified. You can also hit '*r*' key to force an execution.
