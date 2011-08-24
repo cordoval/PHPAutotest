@@ -1,13 +1,13 @@
 #!/bin/php
+<?php
+do {
+    checkFileMTime();
+    waitOneCicle();
 
-doTheLoop()
-{
-  while :
-  do
-    checkFileMTime
-    waitOneCicle
-  done
-}
+    // check for exit command or something @TODO add
+
+} while ();
+?>
 
 messageUsage()
 {
