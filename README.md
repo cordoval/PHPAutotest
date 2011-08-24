@@ -70,6 +70,12 @@ You need to provide 2 arguments to the application:
  * The framework to use
  * The test file or directory(Behat only) to run
 
+Example:
+
+```sh
+./autotest phpunit demo/PHPUnit/SomeClassTests.php
+```
+
 PHPAutotest will execute your tests, idle for 1 second and check if the file has been modified. You can also hit '*r*' key to force an execution.
 
 Also, you can hide the terminal because it will notify you with the results of the test.
