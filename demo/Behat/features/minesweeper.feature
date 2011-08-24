@@ -6,11 +6,11 @@ Feature: minesweeper game
 
 Scenario: Parse a grid 3 by 3
   Given I pass a grid:
-   | 1 | * | . | . |
-   | 2 | . | . | . |
-   | 3 | . | . | * |
+   | 0 | * | . | . |
+   | 1 | . | . | . |
+   | 2 | . | . | * |
   When I run filter
   Then I should get:
-   | 1 | * | . | . |
-   | 2 | . | . | . |
-   | 3 | . | . | * |
+   | 0 | * | . | . |
+   | 1 | . | . | . |
+   | 2 | . | . | * |
