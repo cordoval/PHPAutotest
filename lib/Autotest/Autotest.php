@@ -1,6 +1,8 @@
 <?php
 
-class Autotest {
+namespace Autotest;
+
+abstract class Autotest {
     const ICON_PASS = '/usr/share/icons/Humanity/actions/48/dialog-apply.svg';
     const ICON_FAIL = '/usr/share/icons/Humanity/emblems/48/emblem-important.svg';
     const TITLE_PASS = 'Test Pass';
@@ -12,7 +14,7 @@ class Autotest {
     const FILEMTIME_COMMAND_TEMPLATE_LINUX = 'ls -l --full-time %s 2> /dev/null | awk \'{print $7}\'';
     const FILEMTIME_COMMAND_TEMPLATE_OSX = 'ls -lT %s 2> /dev/null | awk \'{print $8}\'';
 
-    private $file;
+    protected $file;
     private $fileMTime;
 
     public function __construct($file) {
@@ -21,11 +23,8 @@ class Autotest {
         $this->fileMTime = $this->getFileMTime();
     }
 
-    public function executeTest() {
-        $this->clearScreen();
-        $output = shell_exec("phpspec {$this->file} -c");
-        $this->renderOutput($output);
-        $this->notifyResult($output);
+    protected function clearScreen() {
+        system('bash scripts/clear');
     }
 
     public function canRetry() {
@@ -52,28 +51,10 @@ class Autotest {
         return 'r' == $keystroke;
     }
 
-    private function clearScreen() {
-        system('bash scripts/clear');
-    }
-
-    private function renderOutput($output) {
-        echo "{$output}\n\n";
-    }
-
-    private function notifyResult($output) {
-        $lines = explode("\n", $output);
-        $command = $this->notifyCommandFactory($this->hasFailed($lines));
-        exec($command);
-    }
-
-    private function notifyCommandFactory($hasFailed) {
+    protected function notifyCommandFactory($hasFailed) {
         if ($hasFailed)
             return sprintf(Autotest::NOTIFY_COMMAND_TEMPLATE, Autotest::ICON_FAIL, Autotest::TITLE_FAIL, Autotest::MESSAGE_FAIL);
         return sprintf(Autotest::NOTIFY_COMMAND_TEMPLATE, Autotest::ICON_PASS, Autotest::TITLE_PASS, Autotest::MESSAGE_PASS);
-    }
-
-    private function hasFailed($lines) {
-        return strpos($lines[sizeof($lines) - 2], 'failure') !== false;
     }
 
     private function getFileMTime() {
