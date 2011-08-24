@@ -25,8 +25,8 @@ class Autotest {
     const MESSAGE_FAIL = 'Failing Spec';
     
     const NOTIFY_COMMAND_TEMPLATE = 'notify-send --hint=string:x-canonical-private-synchronous: -i "%s" "%s" "%s"';
-    const FILEMTIME_COMMAND_LINUX = 'ls -l --full-time %s 2> /dev/null | awk \'{print $7}\'';
-    const FILEMTIME_COMMAND_OSX = 'ls -lT %s 2> /dev/null | awk \'{print $8}\'';
+    const FILEMTIME_COMMAND_TEMPLATE_LINUX = 'ls -l --full-time %s 2> /dev/null | awk \'{print $7}\'';
+    const FILEMTIME_COMMAND_TEMPLATE_OSX = 'ls -lT %s 2> /dev/null | awk \'{print $8}\'';
     
     private $file;
     private $fileMTime;
@@ -94,9 +94,9 @@ class Autotest {
     private function getFileMTimeCommandFactoryFor($os) {
         switch ($os) {
             case 'linux':
-                return Autotest::FILEMTIME_COMMAND_LINUX;
+                return Autotest::FILEMTIME_COMMAND_TEMPLATE_LINUX;
             case 'osx':
-                return Autotest::FILEMTIME_COMMAND_OSX;
+                return Autotest::FILEMTIME_COMMAND_TEMPLATE_OSX;
         }
     }
 
