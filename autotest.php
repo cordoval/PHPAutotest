@@ -1,47 +1,4 @@
-#!/bin/bash
-
-delay=1
-title="PHPUnit Test Monitor"
-OPTIONS=""
-notificator=""
-soundAvailable=0
-sound=0
-system=""
-file=""
-oldMTime=""
-newMTime=""
-
-init()
-{
-  UNAME=$(uname)
-  if [[ "$UNAME" = Darwin ]]
-  then
-    system="osx"
-    notificator="growl"
-    soundAvailable=1
-  elif [[ "$UNAME" = *Linux* ]]
-  then
-    system="linux"
-    if [[ `which notify-send` != "" ]]
-    then
-      notificator="gnome"
-    elif [[ `which kdialog` != "" ]]
-    then
-      #kdialog --passivepopup <text> --title <title> <timeout>
-      notificator="kde"
-    else
-      errorInvalidNotificator
-      exit 1
-    fi
-    if [[ `which espeak` != "" && `which aplay` != "" ]]
-    then
-      soundAvailable=1
-    fi
-  else
-    errorInvalidSystem
-    exit 1
-  fi
-}
+#!/bin/php
 
 doTheLoop()
 {
