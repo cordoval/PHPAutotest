@@ -55,7 +55,9 @@ Not yet implemented
 
 ##Instructions:
 
-You can download the phar file here. Just place it somewhere, give it execution permissions and add it to your path.
+You can download the phar file here: https://github.com/downloads/Programania/PHPAutotest/autotest.phar
+
+Just place it somewhere, give it execution permissions and add it to your path.
 
 Also, you can clone this repository and compile the PHAR file yourself:
 
