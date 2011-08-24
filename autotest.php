@@ -5,8 +5,6 @@
  * with phpspec (see phpspec.net)
  * The second step is to turn this script now php into
  * a Symfony2 Command
- *
- *
  */
 
 $classFile = "NewBowlingGameSpec.php";
@@ -22,15 +20,18 @@ $messageFail = "Failing Spec";
 
 while (true) {
     exec('inotifywait -q -e modify '.$class, $text);
-    exec('phpspec '.$test." | tail -n2 | grep \"OK\"", $text);
+    exec('phpspec "'.$test.'" -c', $text);
     $output_text = trim(implode("\n", $text));
-    echo $output_text;
-    if ( 1 ) {
-        $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconPass.'" "'.$titlePass.'" "'.$messagePass.'"';
-        exec($strCommand, $text);
-    } else {
+    echo $output_text."\n\n";
+    $strCommand = 'phpspec "'.$test.'" | tail -n1 | grep "failure"';
+    $text = '';
+    exec($strCommand, $text);
+    $output_text = trim(implode("\n", $text));
+    if ( $output_text ) {
         $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconFail.'" "'.$titleFail.'" "'.$messageFail.'"';
-        exec($strCommand, $text);
+    } else {
+        $strCommand = 'notify-send --hint=string:x-canonical-private-synchronous: -i "'.$iconPass.'" "'.$titlePass.'" "'.$messagePass.'"';
     }
+    exec($strCommand, $text);
 }
 ?>
