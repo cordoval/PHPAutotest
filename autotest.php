@@ -34,23 +34,6 @@ while (true) {
 //    waitForFileChange();
     sleep(1);
 
-        exec("phpspec ${test} -c", $text);
-    // serach on $output_text if last line has failure word
-    // get last sentence
-    $fail = $text[sizeof($text)-1];
-    preg_match('/^failure/', $fail, $matches);
-    print_r($matches);
-
-
-    $lines = array();
-echo exec("phpspec ${test} -c", $lines);
-if (strpos(array_pop($lines), 'failure') !== false) {
-$strCommand = buildNotifyCommand($iconFail, $titleFail, $messageFail);
-} else {
-$strCommand = buildNotifyCommand($iconPass, $titlePass, $messagePass);
-}
-exec($strCommand, $text);
-
     $output_text = trim(implode("\n", $text));
     echo $output_text."\n\n";
     //$strCommand = "phpspec ${test} | tail -n1 | grep \"failure\"";
