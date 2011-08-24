@@ -51,9 +51,11 @@ class FeatureContext extends BehatContext
     public function iPassAGrid(TableNode $table)
     {
         $hash = $table->getRowsHash();
-        foreach ($hash as $row) {
-            $this->grid[] = $row;
+        print_r($hash);
+        foreach ($hash as $key => $row) {
+            $this->grid[$key] = str_split($row);
         }
+
     }
 
     /**
@@ -62,6 +64,8 @@ class FeatureContext extends BehatContext
     public function iRunFilter()
     {
         foreach ($this->grid as $key => $row) {
+            //$parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
+            //$row = array_map($parseDotInto0, $row);
             $this->grid[$key] = $row;
         }
     }
@@ -75,7 +79,7 @@ class FeatureContext extends BehatContext
         foreach ($hash as $key => $row) {
             if ($this->grid[$key] != $row) {
                 throw new Exception(
-                    "Actual output is:\n" . print_r($this->grid)
+                    "Actual output is:\n" . print_r($this->grid, true)
                 );
             }
         }
