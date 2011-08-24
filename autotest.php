@@ -1,5 +1,12 @@
 #!/bin/php
 <?php
+/*
+ * This version of autotest.php is geared towards the usage
+ * with phpspec (see phpspec.net)
+ *
+ *
+ */
+
 do {
     checkFileMTime();
     waitOneCicle();
@@ -100,17 +107,18 @@ public function checkFileMTime()
   oldMTime="${newMTime}"
 }
 
-executeTest()
+public function executeTest()
 {
-  messageExecution
-  outcome=`phpspec "$file" -c`
-  echo "${outcome}"
-  notify `echo "${outcome}" | tail -n2`
-  messageWait
+  messageExecution();
+  $outcome = 'phpspec "$file" -c'
+  echo "${outcome}";
+  exec('notify "echo \"${outcome}\" | tail -n2');
+  messageWait();
 }
 
-notify()
+public function notify()
 {
+  // @TODO:
   typeset message="$*"
   message=$(printf %q $message | sed 's/\\//g' | sed 's/\$//g' | sed 's/E\[0mE\[37;41mE\[2K//g' | sed 's/E\[30;42mE\[2K//g' | sed 's/E\[0mE\[2K//g' | sed "s/'//g" | sed 's/,A/ \(A/g' | sed 's/\./)/g' | sed 's/,/, /g' | sed 's/tests/ tests/g' | sed 's/assertions/ assertions/g' | sed 's/OK/OK /g')
   case $notificator in
@@ -118,35 +126,14 @@ notify()
     "gnome") notifyGnome "${message}" ;;
     "kde") notifyKDE "${message}" ;;
   esac
-  if [[ $sound == 1 ]]
-  then
-    say "${message}"
-  fi
 }
 
 say()
 {
   typeset message="$*"
-  case $system in
-    "linux") sayLinux "${message}" ;;
-    "osx") sayOSx "${message}" ;;
-  esac
-}
-
-sayLinux()
-{
-  typeset message="$*"
   espeak -a 200 -p 90 -s 155 -k10 -w /tmp/phpunit_notification.wav "${message}"
   (aplay /tmp/phpunit_notification.wav > /dev/null 2>&1) &
-}
-
-sayOSx()
-{
-  typeset message="$*"
-  (osascript <<EOD
-say "${message}" using "Alex"
-EOD
-) &
+  esac
 }
 
 notifyGnome()
