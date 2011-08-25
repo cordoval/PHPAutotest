@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 
 $pharFile = __DIR__ . '/autotest.phar';
