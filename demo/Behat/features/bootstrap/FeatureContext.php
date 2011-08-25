@@ -50,7 +50,7 @@ class FeatureContext extends BehatContext
      */
     public function iPassAGrid(TableNode $table)
     {
-        $hash = $table->getHash();
+        $hash = $table->getRows();
         foreach ($hash as $key => $row) {
             $this->grid[$key] = $row;
         }
@@ -74,7 +74,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldGet(TableNode $table)
     {
-        $hash = $table->getHash();
+        $hash = $table->getRows();
         foreach ($hash as $key => $row) {
             if ($this->grid[$key] != $row) {
                 throw new Exception(
