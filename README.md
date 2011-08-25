@@ -2,7 +2,7 @@
 
 This application monitors your tests and executes them whenever you make any changes to them.
 
-It actually supports the main three TDD/BDD frameworks for PHP: PHPUnit, PHPSpec and Behat
+It currently supports the main three TDD/BDD frameworks for PHP: PHPUnit, PHPSpec and Behat
 
 ##Framework requirements:
 
@@ -58,15 +58,18 @@ Not yet implemented
 
 ##Instructions:
 
-You can download the phar file here: https://github.com/downloads/Programania/PHPAutotest/autotest.phar
+1. You can download the phar file here: https://github.com/downloads/Programania/PHPAutotest/autotest.phar
 
-Just place it somewhere, give it execution permissions and add it to your path.
-
-Also, you can clone this repository and compile the PHAR file yourself:
+You can also clone this repository and compile the PHAR file yourself:
 
 ```sh
 $ ./compile
 ```
+
+2. Once you have your PHAR file, copy it somewhere in your filesystem and give it execution permissions
+3. Then add it to your path or simply make a link into your bin directory
+
+*Warning*: Take into account that you won't be able to execute the PHAR file from the project's root directory, as everything will be duplicated inside and outside the PHAR archive.
 
 ##Usage:
 
@@ -78,7 +81,7 @@ You need to provide 2 arguments to the application:
 Example:
 
 ```sh
-$ ./autotest phpunit demo/PHPUnit/SomeClassTests.php
+$ ./autotest.phar phpunit demo/PHPUnit/SomeClassTests.php
 ```
 
 PHPAutotest will execute your tests, idle for 1 second and check if the file has been modified. You can also hit '*r*' key to force an execution.
