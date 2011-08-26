@@ -22,7 +22,7 @@ class Factory {
         //  - or fail gentle
         if (strpos($file, "Spec") !== false) {
             $framework = Factory::PHPSPEC;
-        } elseif (strpos($file, "Spec") !== false) {
+        } elseif (strpos($file, "Test") !== false) {
             $framework = Factory::PHPUNIT;
         } elseif (strpos($file, "feature") !== false) {
             $framework = Factory::BEHAT;
