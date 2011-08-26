@@ -14,7 +14,31 @@ class Factory {
     const PHPSPEC = "phpspec";
     const BEHAT = "behat";
 
-    public static function create($framework, $file) {
+    public static function create($file) {
+        // here we detect:
+        //  - *Spec.php
+        //  - *Test.php
+        //  - *.feature
+        //  - or fail gentle
+        if (preg_match('/^Spec.php/', $file)) {
+            $framework = Factory::PHPSPEC;
+        } elseif (preg_match('/^Test.php/', $file)) {
+            $framework = Factory::PHPUNIT;
+        } elseif (preg_match('/^.feature/', $file)) {
+            $framework = Factory::BEHAT;
+        } else {
+            echo <<<EOT
+
+Error: Framework not recognized
+
+Usage: autotest <file>
+
+Notice: File must end up in *Spec.php, *Test.php, or *.feature
+
+EOT;
+            return false;
+        }
+
         switch ($framework) {
             case Factory::PHPUNIT:
                 return new PHPUnitAutotest($file);
@@ -26,4 +50,5 @@ class Factory {
         throw new Exception("Wrong framework");
     }
 
+    return true;
 }
