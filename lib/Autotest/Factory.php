@@ -48,7 +48,8 @@ EOT;
                 return new BehatAutotest($file);
         }
         throw new Exception("Wrong framework");
+
+        return true;
     }
 
-    return true;
 }
