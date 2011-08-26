@@ -20,11 +20,11 @@ class Factory {
         //  - *Test.php
         //  - *.feature
         //  - or fail gentle
-        if (preg_match('/^Spec.php/', $file)) {
+        if (strpos($file, "Spec") !== false) {
             $framework = Factory::PHPSPEC;
-        } elseif (preg_match('/^Test.php/', $file)) {
+        } elseif (strpos($file, "Spec") !== false) {
             $framework = Factory::PHPUNIT;
-        } elseif (preg_match('/^.feature/', $file)) {
+        } elseif (strpos($file, "feature") !== false) {
             $framework = Factory::BEHAT;
         } else {
             echo <<<EOT
