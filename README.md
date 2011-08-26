@@ -73,14 +73,16 @@ $ ./compile
 
 ##Usage:
 
-You need to provide 1 argument to the application:
-
- * The test file or directory(Behat only) to run
-
-Example:
+If you use standard filename formats for your tests (*Test.php, *Spec.php or .feature), you can let PHPAutotest to detect the framework for you:
 
 ```sh
 $ ./autotest.phar demo/PHPUnit/SomeClassTests.php
+```
+
+If you prefer, you can specify the framework adding an argument to the command:
+
+```sh
+$ ./autotest.phar phpunit demo/PHPUnit/SomeClassTests.php
 ```
 
 PHPAutotest will execute your tests, idle for 1 second and check if the file has been modified. You can also hit '*r*' key to force an execution.

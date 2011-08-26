@@ -1,16 +1,26 @@
 #!/usr/bin/php
 <?php
+/*
+ * This file is part of PHPAutotest
+ *
+ * (c) Guillermo Gutiérrez Almazor <guille@ggalmazor.com>
+ * (c) Luis Cordoval <cordoval@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 $pharFile = __DIR__ . '/autotest.phar';
 
 if (file_exists($pharFile))
-    unlink($pharFile);
+  unlink($pharFile);
 
 $phar = new Phar($pharFile, 0, 'autotest.phar');
 $phar->setSignatureAlgorithm(\Phar::SHA1);
 
 $phar->startBuffering();
 
+$phar->addFromString('bootstrap.php', file_get_contents('bootstrap.php'));
 $phar->addFromString('lib/Autotest/Autotest.php', file_get_contents('lib/Autotest/Autotest.php'));
 $phar->addFromString('lib/Autotest/Factory.php', file_get_contents('lib/Autotest/Factory.php'));
 $phar->addFromString('lib/Autotest/PHPUnitAutotest.php', file_get_contents('lib/Autotest/PHPUnitAutotest.php'));
@@ -24,48 +34,62 @@ $phar->stopBuffering();
 exec("chmod +x {$pharFile}");
 
 function getStub() {
-    return <<<'EOF'
+  return <<<'EOF'
 #!/usr/bin/php
 <?php
 /*
- * This version of autotest.php is geared towards the usage
- * with phpspec (see phpspec.net)
- * The second step is to turn this script now php into
- * a Symfony2 Command
+ * This file is part of PHPAutotest
+ *
+ * (c) Guillermo Gutiérrez Almazor <guille@ggalmazor.com>
+ * (c) Luis Cordoval <cordoval@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
     
 Phar::mapPhar('autotest.phar');
 
-require_once 'phar://autotest.phar/lib/Autotest/Factory.php';
+include('phar://autotest.phar/bootstrap.php');
 
-checkArguments($argv);
+list($file, $framework) = parseArguments($argv);
 
-$autotest = Autotest\Factory::create($argv[1]);
-while (true) {
-    $autotest->executeTest();
-    while (!$autotest->canRetry()) {
-        // we wait while prompting for retry key press
-    }
+try {
+  $autotest = Autotest\Factory::create($file, $framework);
+} catch (\Exception $e) {
+  die(printUsage($e->getMessage()));
 }
 
-function checkArguments($argv) {
-    if (count($argv) != 2) {
-        printUsage();
-        die();
-    }
+while (true && $autotest) {
+  $autotest->executeTest();
+  while (!$autotest->canRetry()) {
+    // we wait while prompting for retry key press
+  }
 }
 
-function printUsage() {
-    echo <<<EOT
-   
-Error: Wrong argument count
+function parseArguments($args) {
+  if (3 == count($args))
+      return array($args[2], $args[1]);
+  if (2 == count($args))
+      return array($args[1], null);
+  die(printUsage("Wrong argument count"));
+}
 
-Usage: autotest <file>
+function printUsage($error) {
+  return <<<EOT
+
+    {$error}
+
+    Usage:
+
+    autotest <file/path>
+
+    or
+
+    autotest <phpunit|phpspec|behat> <file/path>
 
 
 EOT;
 }
-
 __HALT_COMPILER();
 EOF;
 }

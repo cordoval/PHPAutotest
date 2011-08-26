@@ -1,37 +1,52 @@
 #!/usr/bin/php
 <?php
 /*
- * This version of autotest.php is geared towards the usage
- * with phpspec (see phpspec.net)
- * The second step is to turn this script now php into
- * a Symfony2 Command
+ * This file is part of PHPAutotest
+ *
+ * (c) Guillermo Gutiérrez Almazor <guille@ggalmazor.com>
+ * (c) Luis Cordoval <cordoval@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-require_once 'lib/Autotest/Factory.php';
+include('bootstrap.php');
 
-checkArguments($argv);
+list($file, $framework) = parseArguments($argv);
 
-$autotest = Autotest\Factory::create($argv[1]);
+try {
+  $autotest = Autotest\Factory::create($file, $framework);
+} catch (\Exception $e) {
+  die(printUsage($e->getMessage()));
+}
+
 while (true && $autotest) {
-    $autotest->executeTest();
-    while (!$autotest->canRetry()) {
-        // we wait while prompting for retry key press
-    }
+  $autotest->executeTest();
+  while (!$autotest->canRetry()) {
+    // we wait while prompting for retry key press
+  }
 }
 
-function checkArguments($argv) {
-    if (count($argv) != 2) {
-        printUsage();
-        die();
-    }
+function parseArguments($args) {
+  if (3 == count($args))
+    return array($args[2], $args[1]);
+  if (2 == count($args))
+    return array($args[1], null);
+  die(printUsage("Wrong argument count"));
 }
 
-function printUsage() {
-    echo <<<EOT
-   
-Error: Wrong argument count
+function printUsage($error) {
+  return <<<EOT
 
-Usage: autotest <file>
+    {$error}
+
+    Usage:
+
+    autotest <file/path>
+
+    or
+
+    autotest <phpunit|phpspec|behat> <file/path>
 
 
 EOT;

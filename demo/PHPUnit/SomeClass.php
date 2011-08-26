@@ -1,9 +1,7 @@
 <?php
 
 class SomeClass {
-
-    public function someMethod() {
-        return true;
-    }
-
+  public function someMethod() {
+    return true;
+  }
 }
