@@ -11,8 +11,8 @@ require_once 'lib/Autotest/Factory.php';
 
 checkArguments($argv);
 
-$autotest = Autotest\Factory::create($argv[1], $argv[2]);
-while (true) {
+$autotest = Autotest\Factory::create($argv[1]);
+while (true && $autotest) {
     $autotest->executeTest();
     while (!$autotest->canRetry()) {
         // we wait while prompting for retry key press
@@ -20,7 +20,7 @@ while (true) {
 }
 
 function checkArguments($argv) {
-    if (count($argv) != 3) {
+    if (count($argv) != 2) {
         printUsage();
         die();
     }
@@ -31,7 +31,7 @@ function printUsage() {
    
 Error: Wrong argument count
 
-Usage: autotest <phpunit|phpspec|behat> <file>
+Usage: autotest <file>
 
 
 EOT;
