@@ -108,8 +108,10 @@ class FeatureContext extends BehatContext
 
                 $isAMine = function ($m) { if ($m == '*') { return '1'; } };
 
+                // finds array of neighbors
                 $neighbours = array_filter($findNeighbors($grid, $x, $y), $isAMine );
 
+                // reduce to sum and output integer
                 $mines = array_reduce( $neighbours , $, 0 );
 
                 return $mines;
