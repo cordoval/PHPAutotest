@@ -104,9 +104,13 @@ class FeatureContext extends BehatContext
             {
                 $xPointer = $x + $c[0] ;
                 $yPointer = $y + $c[1] ;
-                print_r($xPointer.'-'.$yPointer);
-                $out = (($xPointer < 0) || ($yPointer < 0) || ($xPointer >= sizeof($grid[0])) || ($yPointer >= sizeof($grid[0])) ) ? '.' : $grid[$yPointer][$xPointer] ;
-                print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                     ');
+                $xLimit = sizeof($grid[0]);
+                $yLimit = sizeof($grid[0]);
+                print_r($xLimit.'--'.$yLimit);
+                //print_r($xPointer.'-'.$yPointer);
+                $out = (($xPointer < 0) || ($yPointer < 0) || ($xPointer >= $xLimit) || ($yPointer >= $yLimit) ) ? '.' : $grid[$yPointer][$xPointer] ;
+                //print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                     ');
+                print_r('out = '.$out);
                 return $out;
             };
 
@@ -143,7 +147,7 @@ class FeatureContext extends BehatContext
             // returns count per cell on x
             $mineCountPerCellOnX = function ($x) use ($grid, $y, $mineCountPerCell)
             {
-                print_r('$x in the loop = '.$x.'     ');
+                //print_r('$x in the loop = '.$x.'     ');
                 return $mineCountPerCell($grid, $x, $y);
             };
 
