@@ -79,6 +79,7 @@ class FeatureContext extends BehatContext
             //$row = array_map($parseDotInto0, $row);
             //$this->grid[$key] = $row;
 
+
             $iterateConverter = function($cell) use ($grid, $x,$y) {};
             $row = array_map($iterateConverter, $row);
 
