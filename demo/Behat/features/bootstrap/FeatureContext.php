@@ -90,10 +90,10 @@ class FeatureContext extends BehatContext
               );
 
               $callbackCoords = function ($c) use ($grid, $x, $y) {
-                  return $grid[$x + $c[1]][$y + $c[2]];
+                  return $grid[$y + $c[2]][$x + $c[1]];
               };
 
-              return array_map( , );
+              return array_map( $callbackCoords , $coords );
             };
             $row = array_map($parseDotInto0, $row);
             $this->grid[$key] = $row;
