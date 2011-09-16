@@ -86,7 +86,7 @@ class FeatureContext extends BehatContext
                   '4' => array( 0, 1),
                   '5' => array( 1,-1),
                   '6' => array( 1, 0),
-                  '0' => array( 1, 1),
+                  '7' => array( 1, 1),
               );
 
               $callbackCoords = function ($c) use ($grid, $x, $y) {
