@@ -84,7 +84,7 @@ class FeatureContext extends BehatContext
 
         $coords = array(
             '0' => array(-1, -1),
-            '1' => array(-1, 1),
+            '1' => array(-1, 0),
             '2' => array(-1, 1),
             '3' => array(0, -1),
             '4' => array(0, 1),
@@ -106,11 +106,11 @@ class FeatureContext extends BehatContext
                 $yPointer = $y + $c[1] ;
                 $xLimit = sizeof($grid[0]);
                 $yLimit = sizeof($grid[0]);
-                print_r($xLimit.'--'.$yLimit);
+                //print_r($xLimit.'--'.$yLimit);
                 //print_r($xPointer.'-'.$yPointer);
                 $out = (($xPointer < 0) || ($yPointer < 0) || ($xPointer >= $xLimit) || ($yPointer >= $yLimit) ) ? '.' : $grid[$yPointer][$xPointer] ;
-                //print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                     ');
-                print_r('out = '.$out);
+                print_r('x = '.$xPointer.' y = '.$yPointer.' --> '.$out.'                                                 ');
+                //print_r('out = '.$out);
                 return $out;
             };
 
