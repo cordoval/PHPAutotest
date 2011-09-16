@@ -165,7 +165,9 @@ class FeatureContext extends BehatContext
             // returns the grid with counts
             $countGrid = function ($grid) use ($mineCountPerCell)
             {
+                $grid = null;
                 for ($y = 0; $y < sizeof($grid[0]); $y++) {
+                    $row = null;
                     for ($x = 0; $x < sizeof($grid[0]); $x++) {
                         $row[] = $mineCountPerCell($grid, $x, $y);
                     }
