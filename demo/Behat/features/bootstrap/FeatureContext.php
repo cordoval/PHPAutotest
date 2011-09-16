@@ -95,6 +95,12 @@ class FeatureContext extends BehatContext
 
               return array_map( $callbackCoords , $coords );
             };
+
+            $updateCellCount = function ($grid, $x, $y) {
+                $input = if ($x == '*') { return 1; } else { return 0; };
+                return array_reduce( array_filter( $input, $findNeighbors ) );
+            };
+
             $row = array_map($parseDotInto0, $row);
             $this->grid[$key] = $row;
         }
