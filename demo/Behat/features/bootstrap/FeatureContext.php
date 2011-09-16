@@ -150,14 +150,12 @@ class FeatureContext extends BehatContext
             // returns count per cell on x
             $mineCountPerCellOnX = function ($x) use ($grid, $y, $mineCountPerCell)
             {
-                //print_r('$x in the loop = '.$x.'     ');
                 return $mineCountPerCell($grid, $x, $y);
             };
 
             // returns count rows
             $countRows = function ($y) use ($grid, $mineCountPerCellOnX)
             {
-                //print_r('$lengthx = '.sizeof($grid[0]).'     ');
                 for ($x = 0; $x < sizeof($grid[0]); $x++) {
                     $row[] = $mineCountPerCellOnX($x);
                 }
@@ -165,10 +163,13 @@ class FeatureContext extends BehatContext
             };
 
             // returns the grid with counts
-            $countGrid = function ($grid) use ($countRows)
+            $countGrid = function ($grid) use ($mineCountPerCell)
             {
                 for ($y = 0; $y < sizeof($grid[0]); $y++) {
-                    $grid[] = $countRows($y);
+                    for ($x = 0; $x < sizeof($grid[0]); $x++) {
+                        $row[] = $mineCountPerCell($grid, $x, $y);
+                    }
+                    $grid[] = $row;
                 }
                 return $grid;
             };
