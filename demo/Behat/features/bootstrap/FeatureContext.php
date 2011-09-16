@@ -94,7 +94,7 @@ class FeatureContext extends BehatContext
         );
 
         /**
-         * find neighbors array of a cell in $x,$y position within a $grid array
+         * find neighbors of a cell in $x,$y position within a $grid array
          */
         $findNeighborsPerCell = function ($grid, $x, $y) use ($coords)
         {
@@ -111,7 +111,7 @@ class FeatureContext extends BehatContext
         };
 
         /**
-         * returns the total mines per neighbor (x,y) per grid (grid)
+         * returns the total mines per neighbor per grid (grid) for a cell in $x,$y position
          */
         $mineCountPerCell = function ($grid, $x, $y)
         {
@@ -133,7 +133,6 @@ class FeatureContext extends BehatContext
          */
         $gridConverter = function($grid)
         {
-
             // returns count per cell on x
             $mineCountPerCellOnX = function ($x) use ($grid, $y)
             {
@@ -143,15 +142,16 @@ class FeatureContext extends BehatContext
             // returns count rows
             $countRows = function ($y) use ($grid)
             {
-                foreach ($x) {
+                for ($x = 0; $x <= sizeof($this->grid), $x++) {
                     $row[] = $mineCountPerCellOnX($x);
                 }
                 return $row;
             };
 
+            // returns the grid with counts
             $countGrid = function ($grid)
             {
-                foreach ($y) {
+                for ($y = 0; $y <= sizeof($this->grid), $y++) {
                     $grid[] = $countRows($y);
                 }
                 return $grid;
