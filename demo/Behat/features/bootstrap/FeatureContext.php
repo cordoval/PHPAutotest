@@ -142,7 +142,7 @@ class FeatureContext extends BehatContext
             // returns count rows
             $countRows = function ($y) use ($grid)
             {
-                for ($x = 0; $x <= sizeof($this->grid), $x++) {
+                for ($x = 0; $x <= sizeof($this->grid); $x++) {
                     $row[] = $mineCountPerCellOnX($x);
                 }
                 return $row;
@@ -151,7 +151,7 @@ class FeatureContext extends BehatContext
             // returns the grid with counts
             $countGrid = function ($grid)
             {
-                for ($y = 0; $y <= sizeof($this->grid), $y++) {
+                for ($y = 0; $y <= sizeof($this->grid); $y++) {
                     $grid[] = $countRows($y);
                 }
                 return $grid;
