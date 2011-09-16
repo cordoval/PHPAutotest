@@ -81,7 +81,7 @@ class FeatureContext extends BehatContext
              * returns an array of the neighbors  => array ('1','2','3','4','6','7',''8,'9') if
              * I pass a grid of numerals
              */
-            $findNeighbors = function ($grid, $x, $y) {
+            $findNeighbors = function ($grid) use ($x, $y) {
               $coords = array(
                   '0' => array(-1,-1),
                   '1' => array(-1, 1),
@@ -105,9 +105,14 @@ class FeatureContext extends BehatContext
              * returns the total mines per neighbor (x,y) per grid (grid)
              */
             $updateCellCount = function ($grid, $x, $y) {
-                 = if ($x == '*') { return 1; } else { return 0; };
-                
-                return array_sum( array_filter( $input, $findNeighbors ) );
+
+                $isAMine = function ($m) { if ($m == '*') { return '1'; } };
+
+                $neighbours = array_filter($findNeighbors($grid, $x, $y), $isAMine );
+
+                $mines = array_reduce( $neighbours , $, 0 );
+
+                return $mines;
             };
 
             $row = array_map($parseDotInto0, $row);
