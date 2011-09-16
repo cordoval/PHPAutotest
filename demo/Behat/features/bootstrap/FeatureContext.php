@@ -109,13 +109,16 @@ class FeatureContext extends BehatContext
                 //print_r($xLimit.'--'.$yLimit);
                 //print_r($xPointer.'-'.$yPointer);
                 $out = (($xPointer < 0) || ($yPointer < 0) || ($xPointer >= $xLimit) || ($yPointer >= $yLimit) ) ? '.' : $grid[$yPointer][$xPointer] ;
-                print_r('x = '.$xPointer.' y = '.$yPointer.' --> '.$out.'                                                 ');
-                //print_r('out = '.$out);
+                //print_r('x = '.$xPointer.' y = '.$yPointer.' --> '.$out.'                                                 ');
+                //print_r('out = '.$out.'                           ');
                 return $out;
             };
 
             // map-processes and returns the array of neighbors numerals
-            return array_map($callbackCoords, $coords);
+            $temp = array_map($callbackCoords, $coords);
+            $temp1 = array();
+            var_export($temp1);
+            return $temp;
 
         };
 
@@ -132,9 +135,9 @@ class FeatureContext extends BehatContext
             };
 
             // count neighbors that are mines
-            print_r(' ------------------------------------  ');
+            //print_r(' ------------------------------------  ');
             $minesCount = array_reduce($findNeighborsPerCell($grid, $x, $y), $addMines);
-            print_r(' ---------total = '.$minesCount.'----------------------  ');
+            print_r('x = '.$x.', y = '.$y.'---------total = '.$minesCount.'----------------------  ');
             return $minesCount;
         };
 
@@ -143,7 +146,7 @@ class FeatureContext extends BehatContext
          */
         $gridConverter = function($grid) use ($mineCountPerCell)
         {
-            $y = 0;
+            //$y = 0;
             // returns count per cell on x
             $mineCountPerCellOnX = function ($x) use ($grid, $y, $mineCountPerCell)
             {
@@ -154,7 +157,7 @@ class FeatureContext extends BehatContext
             // returns count rows
             $countRows = function ($y) use ($grid, $mineCountPerCellOnX)
             {
-                print_r('$lengthx = '.sizeof($grid[0]).'     ');
+                //print_r('$lengthx = '.sizeof($grid[0]).'     ');
                 for ($x = 0; $x < sizeof($grid[0]); $x++) {
                     $row[] = $mineCountPerCellOnX($x);
                 }
