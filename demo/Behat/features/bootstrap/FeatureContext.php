@@ -70,6 +70,38 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @When /^I run filter with neighbor awareness$/
+     */
+    public function iRunFilterWithNeighborAwareness()
+    {
+        foreach ($this->grid as $key => $row) {
+            $parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
+
+            $findNeighbors = function ($grid, $x, $y) {
+              $coords = array(
+                  '0' => array(-1,-1),
+                  '1' => array(-1, 1),
+                  '2' => array(-1, 1),
+                  '3' => array( 0,-1),
+                  '4' => array( 0, 1),
+                  '5' => array( 1,-1),
+                  '6' => array( 1, 0),
+                  '0' => array( 1, 1),
+              );
+
+              $callbackCoords = function ($c) use ($grid, $x, $y) {
+                  return $grid[$x + $c[1]][$y + $c[2]];
+              };
+
+              return array_map( , );
+            };
+            $row = array_map($parseDotInto0, $row);
+            $this->grid[$key] = $row;
+        }
+    }
+
+
+    /**
      * @Then /^I should get:$/
      */
     public function iShouldGet(TableNode $table)
