@@ -113,7 +113,7 @@ class FeatureContext extends BehatContext
         /**
          * returns the total mines per neighbor per grid (grid) for a cell in $x,$y position
          */
-        $mineCountPerCell = function ($grid, $x, $y)
+        $mineCountPerCell = function ($grid, $x, $y) use ($findNeighborsPerCell)
         {
 
             // adds up if $cell is a '*'
@@ -131,7 +131,7 @@ class FeatureContext extends BehatContext
         /**
          * returns converted grid with each cell mines count
          */
-        $gridConverter = function($grid)
+        $gridConverter = function($grid) use ($mineCountPerCell)
         {
             $y = 0;
             // returns count per cell on x
