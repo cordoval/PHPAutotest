@@ -75,7 +75,12 @@ class FeatureContext extends BehatContext
     public function iRunFilterWithNeighborAwareness()
     {
         foreach ($this->grid as $key => $row) {
-            $parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
+            //$parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
+            //$row = array_map($parseDotInto0, $row);
+            //$this->grid[$key] = $row;
+
+            $iterateConverter = function($cell) use ($grid, $x,$y) {};
+            $row = array_map($iterateConverter, $row);
 
             /**
              * returns an array of the neighbors  => array ('1','2','3','4','6','7',''8,'9') if
@@ -123,8 +128,7 @@ class FeatureContext extends BehatContext
                 return $mines;
             };
 
-            $row = array_map($parseDotInto0, $row);
-            $this->grid[$key] = $row;
+
         }
     }
 
