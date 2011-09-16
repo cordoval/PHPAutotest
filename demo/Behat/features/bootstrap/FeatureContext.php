@@ -63,7 +63,14 @@ class FeatureContext extends BehatContext
     public function iRunFilter()
     {
         foreach ($this->grid as $key => $row) {
-            $parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
+            $parseDotInto0 = function ($cell)
+            {
+                if ($cell == '.') {
+                    return '0';
+                } else {
+                    return '*';
+                }
+            };
             $row = array_map($parseDotInto0, $row);
             $this->grid[$key] = $row;
         }
@@ -74,63 +81,86 @@ class FeatureContext extends BehatContext
      */
     public function iRunFilterWithNeighborAwareness()
     {
-        foreach ($this->grid as $key => $row) {
-            //$parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
-            //$row = array_map($parseDotInto0, $row);
-            //$this->grid[$key] = $row;
 
+        $coords = array(
+            '0' => array(-1, -1),
+            '1' => array(-1, 1),
+            '2' => array(-1, 1),
+            '3' => array(0, -1),
+            '4' => array(0, 1),
+            '5' => array(1, -1),
+            '6' => array(1, 0),
+            '7' => array(1, 1),
+        );
 
-            $iterateConverter = function($cell) use ($grid, $x,$y) {};
-            $row = array_map($iterateConverter, $row);
+        /**
+         * find neighbors array of a cell in $x,$y position within a $grid array
+         */
+        $findNeighborsPerCell = function ($grid, $x, $y) use ($coords)
+        {
 
-            /**
-             * returns an array of the neighbors  => array ('1','2','3','4','6','7',''8,'9') if
-             * I pass a grid of numerals
-             */
-            $findNeighbors = function ($grid) use ($x, $y) {
-              $coords = array(
-                  '0' => array(-1,-1),
-                  '1' => array(-1, 1),
-                  '2' => array(-1, 1),
-                  '3' => array( 0,-1),
-                  '4' => array( 0, 1),
-                  '5' => array( 1,-1),
-                  '6' => array( 1, 0),
-                  '7' => array( 1, 1),
-              );
-
-              // does get the numeral on each neighbor coordinate
-              $callbackCoords = function ($c) use ($grid, $x, $y) {
-                  return $grid[$y + $c[2]][$x + $c[1]];
-              };
-
-              return array_map( $callbackCoords , $coords );
+            // gets the numeral on each neighbor coordinate
+            $callbackCoords = function ($c) use ($grid, $x, $y)
+            {
+                return $grid[$y + $c[2]][$x + $c[1]];
             };
 
-            /**
-             * returns the total mines per neighbor (x,y) per grid (grid)
-             */
-            $updateCellCount = function ($grid, $x, $y) {
+            // map-processes and returns the array of neighbors numerals
+            return array_map($callbackCoords, $coords);
 
-                $isAMine = function ($m) { if ($m == '*') { return '1'; } };
+        };
 
-                // finds array of neighbors
-                $neighboursArray = array_filter($findNeighbors($grid, $x, $y), $isAMine );
+        /**
+         * returns the total mines per neighbor (x,y) per grid (grid)
+         */
+        $mineCountPerCell = function ($grid, $x, $y)
+        {
 
-                // rsum
-                $rsum = function rsum($v, $w) {
-                    $v += $w;
-                    return $v;
-                };
-
-                // reduce to sum and output integer
-                $mines = array_reduce( $neighboursArray , $rsum, 0 );
-
-                return $mines;
+            // adds up if $cell is a '*'
+            $addMines = function ($sum, $cell)
+            {
+                return $sum += ($cell == '*') ? 1 : 0;
             };
 
+            // count neighbors that are mines
+            $minesCount = array_reduce($findNeighborsPerCell($grid, $x, $y), $addMines);
 
-        }
+            return $minesCount;
+        };
+
+        /**
+         * returns converted grid with each cell mines count
+         */
+        $gridConverter = function($grid)
+        {
+
+            // returns count per cell on x
+            $mineCountPerCellOnX = function ($x) use ($grid, $y)
+            {
+                return $mineCountPerCell($grid, $x, $y);
+            };
+
+            // returns count rows
+            $countRows = function ($y) use ($grid)
+            {
+                foreach ($x) {
+                    $row[] = $mineCountPerCellOnX($x);
+                }
+                return $row;
+            };
+
+            $countGrid = function ($grid)
+            {
+                foreach ($y) {
+                    $grid[] = $countRows($y);
+                }
+                return $grid;
+            };
+
+            return $countGrid($grid);
+        };
+
+        $this->grid = $gridConverter($this->grid);
     }
 
 
