@@ -102,10 +102,11 @@ class FeatureContext extends BehatContext
             // gets the numeral on each neighbor coordinate
             $callbackCoords = function ($c) use ($grid, $x, $y)
             {
-                $xPointer = ($x+$c[0]) < 0 ? 0 : $x + $c[0] ;
-                $yPointer = ($y+$c[1]) < 0 ? 0 : $y + $c[1] ;
-                $out = ((($x+$c[0]) < 0) || (($y+$c[1]) < 0)) ? '.' : $grid[$yPointer][$xPointer] ;
-                print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                  ');
+                $xPointer = $x + $c[0] ;
+                $yPointer = $y + $c[1] ;
+                print_r($xPointer.'-'.$yPointer);
+                $out = (($xPointer < 0) || ($yPointer < 0) || ($xPointer >= sizeof($grid[0])) || ($yPointer >= sizeof($grid[0])) ) ? '.' : $grid[$yPointer][$xPointer] ;
+                print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                     ');
                 return $out;
             };
 
@@ -142,13 +143,15 @@ class FeatureContext extends BehatContext
             // returns count per cell on x
             $mineCountPerCellOnX = function ($x) use ($grid, $y, $mineCountPerCell)
             {
+                print_r('$x in the loop = '.$x.'     ');
                 return $mineCountPerCell($grid, $x, $y);
             };
 
             // returns count rows
             $countRows = function ($y) use ($grid, $mineCountPerCellOnX)
             {
-                for ($x = 0; $x <= sizeof($grid); $x++) {
+                print_r('$lengthx = '.sizeof($grid[0]).'     ');
+                for ($x = 0; $x < sizeof($grid[0]); $x++) {
                     $row[] = $mineCountPerCellOnX($x);
                 }
                 return $row;
@@ -157,7 +160,7 @@ class FeatureContext extends BehatContext
             // returns the grid with counts
             $countGrid = function ($grid) use ($countRows)
             {
-                for ($y = 0; $y <= sizeof($grid); $y++) {
+                for ($y = 0; $y < sizeof($grid[0]); $y++) {
                     $grid[] = $countRows($y);
                 }
                 return $grid;
