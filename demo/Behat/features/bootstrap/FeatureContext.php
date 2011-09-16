@@ -102,9 +102,9 @@ class FeatureContext extends BehatContext
             // gets the numeral on each neighbor coordinate
             $callbackCoords = function ($c) use ($grid, $x, $y)
             {
-                $xPointer = ($x+$c[1]) < 0 ? 0 : $x + $c[1] ;
-                $yPointer = ($y+$c[2]) < 0 ? 0 : $y + $c[2] ;
-                $out = ((($x+$c[1]) < 0) || (($y+$c[2]) < 0)) ? 0 : $grid[$yPointer][$xPointer] ;
+                $xPointer = ($x+$c[0]) < 0 ? 0 : $x + $c[0] ;
+                $yPointer = ($y+$c[1]) < 0 ? 0 : $y + $c[1] ;
+                $out = ((($x+$c[0]) < 0) || (($y+$c[1]) < 0)) ? '.' : $grid[$yPointer][$xPointer] ;
                 print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                  ');
                 return $out;
             };
