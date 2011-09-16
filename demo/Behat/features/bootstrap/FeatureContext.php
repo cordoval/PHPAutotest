@@ -77,6 +77,10 @@ class FeatureContext extends BehatContext
         foreach ($this->grid as $key => $row) {
             $parseDotInto0 = function ($cell) { if($cell == '.') { return '0'; } else { return '*'; }  };
 
+            /**
+             * returns an array of the neighbors  => array ('1','2','3','4','6','7',''8,'9') if
+             * I pass a grid of numerals
+             */
             $findNeighbors = function ($grid, $x, $y) {
               $coords = array(
                   '0' => array(-1,-1),
@@ -89,6 +93,7 @@ class FeatureContext extends BehatContext
                   '7' => array( 1, 1),
               );
 
+              // does get the numeral on each neighbor coordinate
               $callbackCoords = function ($c) use ($grid, $x, $y) {
                   return $grid[$y + $c[2]][$x + $c[1]];
               };
@@ -96,9 +101,13 @@ class FeatureContext extends BehatContext
               return array_map( $callbackCoords , $coords );
             };
 
+            /**
+             * returns the total mines per neighbor (x,y) per grid (grid)
+             */
             $updateCellCount = function ($grid, $x, $y) {
-                $input = if ($x == '*') { return 1; } else { return 0; };
-                return array_reduce( array_filter( $input, $findNeighbors ) );
+                 = if ($x == '*') { return 1; } else { return 0; };
+                
+                return array_sum( array_filter( $input, $findNeighbors ) );
             };
 
             $row = array_map($parseDotInto0, $row);
