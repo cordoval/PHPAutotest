@@ -133,25 +133,26 @@ class FeatureContext extends BehatContext
          */
         $gridConverter = function($grid)
         {
+            $y = 0;
             // returns count per cell on x
-            $mineCountPerCellOnX = function ($x) use ($grid, $y)
+            $mineCountPerCellOnX = function ($x) use ($grid, $y, $mineCountPerCell)
             {
                 return $mineCountPerCell($grid, $x, $y);
             };
 
             // returns count rows
-            $countRows = function ($y) use ($grid)
+            $countRows = function ($y) use ($grid, $mineCountPerCellOnX)
             {
-                for ($x = 0; $x <= sizeof($this->grid); $x++) {
+                for ($x = 0; $x <= sizeof($grid); $x++) {
                     $row[] = $mineCountPerCellOnX($x);
                 }
                 return $row;
             };
 
             // returns the grid with counts
-            $countGrid = function ($grid)
+            $countGrid = function ($grid) use ($countRows)
             {
-                for ($y = 0; $y <= sizeof($this->grid); $y++) {
+                for ($y = 0; $y <= sizeof($grid); $y++) {
                     $grid[] = $countRows($y);
                 }
                 return $grid;
