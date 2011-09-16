@@ -102,7 +102,11 @@ class FeatureContext extends BehatContext
             // gets the numeral on each neighbor coordinate
             $callbackCoords = function ($c) use ($grid, $x, $y)
             {
-                return $grid[$y + $c[2]][$x + $c[1]];
+                $xPointer = ($x+$c[1]) < 0 ? 0 : $x + $c[1] ;
+                $yPointer = ($y+$c[2]) < 0 ? 0 : $y + $c[2] ;
+                $out = ((($x+$c[1]) < 0) || (($y+$c[2]) < 0)) ? 0 : $grid[$yPointer][$xPointer] ;
+                print_r('x = '.$x.' y = '.$y.' --> '.$out.'                                  ');
+                return $out;
             };
 
             // map-processes and returns the array of neighbors numerals
@@ -123,8 +127,9 @@ class FeatureContext extends BehatContext
             };
 
             // count neighbors that are mines
+            print_r(' ------------------------------------  ');
             $minesCount = array_reduce($findNeighborsPerCell($grid, $x, $y), $addMines);
-
+            print_r(' ---------total = '.$minesCount.'----------------------  ');
             return $minesCount;
         };
 
