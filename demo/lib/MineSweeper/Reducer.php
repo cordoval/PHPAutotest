@@ -1,8 +1,6 @@
 <?php
 namespace MineSweeper;
 
-use MineSweeper\FilterInterface;
-
 class Reducer implements ReducerInterface
 {
     protected $filter;

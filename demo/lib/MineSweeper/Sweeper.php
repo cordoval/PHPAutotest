@@ -1,8 +1,6 @@
 <?php
 namespace MineSweeper;
 
-use MineSweeper\ReducerInterface;
-
 class Sweeper implements SweeperInterface
 {
     public function __construct(ReducerInterface $reducer) {
