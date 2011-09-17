@@ -5,9 +5,17 @@ namespace MineSweeper;
 class MineField
 {
 
+    protected $stenciler;
+    protected $masker;
+    protected $reducer;
+    protected $sweeper;
+
 public __construct()
 {
-
+    $this->setStencil($stencil);
+    $this->mineField->setMasker($stencilMasker);
+    $this->mineField->setMineReducer($mineReducer);
+    $this->mineField->setGridSweeper($gridSweeper);
 }
 
 $stencil = array(
