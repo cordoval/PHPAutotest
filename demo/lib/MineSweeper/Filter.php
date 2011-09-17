@@ -34,7 +34,7 @@ class Filter implements FilterInterface
         };
 
         // map-processes and returns the array of neighbors numerals
-        return array_map($stencilMasker, $this->stenciler->stencil());
+        return array_map($stencilMasker, $this->stenciler->getStencil());
    }
 }
 
