@@ -3,5 +3,5 @@ namespace MineSweeper;
 
 interface StencilerInterface
 {
-    function stencil();
+    function getStencil();
 }

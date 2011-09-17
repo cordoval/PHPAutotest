@@ -22,7 +22,7 @@ class Filter implements FilterInterface
      * 
      * @return value
      */
-    public function process($grid, $x, $y) {
+    public function process(array $grid, int $x, int $y) {
         $this->x = $x;
         $this->y = $y;
         $this->grid = $grid;

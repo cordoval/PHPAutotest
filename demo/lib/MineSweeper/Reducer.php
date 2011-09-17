@@ -22,10 +22,11 @@ class Reducer implements ReducerInterface
    public function reduce(array $grid, int $x, int $y)
    {
        // count neighbors that are mines
-        $mineCount = array_reduce($this->filter->process($grid, $x, $y), array($this, 'addMines'));
+       $arrayFiltered = $this->filter->process($grid, $x, $y);
+       $mineCount = array_reduce($arrayFiltered, array($this, 'addMines'));
 
-        // if current position is a mine just output a mine else the mines count surrounding it
-        return ($grid[$y][$x] == "*") ? '*' : $mineCount;
+       // if current position is a mine just output a mine else the mines count surrounding it
+       return ($grid[$y][$x] == "*") ? '*' : $mineCount;
    }
 
    /**
