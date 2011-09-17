@@ -10,7 +10,7 @@ class MineField
     protected $reducer;
     protected $sweeper;
 
-    public function __constructor(StencilerInterface $stenciler, MaskerInterface $masker, ReducerInterface $reducer, SweeperInterface $sweeper)
+    public function __construct(StencilerInterface $stenciler, MaskerInterface $masker, ReducerInterface $reducer, SweeperInterface $sweeper)
     {
         $this->stenciler = $stenciler;
         $this->masker = $masker;
