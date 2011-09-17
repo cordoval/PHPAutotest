@@ -20,16 +20,23 @@ class Reducer implements ReducerInterface
     */
    public function reduce(array $grid, int $x, int $y)
    {
-        // adds up if $cell is a '*'
-        $addMines = function ($sum, $cell)
-        {
-            return $sum += ($cell == '*') ? 1 : 0;
-        };
-
-        // count neighbors that are mines
-        $mineCount = array_reduce($this->filter->process($grid, $x, $y), $addMines);
+       // count neighbors that are mines
+        $mineCount = array_reduce($this->filter->process($grid, $x, $y), array($this, 'addMines'));
 
         // if current position is a mine just output a mine else the mines count surrounding it
         return ($grid[$y][$x] == "*") ? '*' : $mineCount;
+   }
+
+   /*
+    * adds up if $cell is a '*'
+    *
+    * @param $sum
+    * @param $cell
+    *
+    * @return value
+    */
+   public function addMines(int $sum, string $cell)
+   {
+       return $sum += ($cell == '*') ? 1 : 0;
    }
 }
