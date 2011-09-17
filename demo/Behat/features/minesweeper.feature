@@ -35,3 +35,21 @@ Scenario: Parse a grid 3 by 3 with neighbor awareness
    | * | 1 | 0 |
    | 1 | 2 | 1 |
    | 0 | 1 | * |
+
+Feature: minesweeper game larger grid
+  In order to implement minesweeper game in any sized grid
+  As a gamer programmer
+  I need to be able to parse a grid
+
+  Background:
+  Given I pass a grid:
+   | * | . | . | * | . | . |
+   | . | . | . | * | . | . |
+   | . | . | * | * | . | . |
+
+Scenario: Parse a grid 6 by 3 with neighbor awareness
+  When I run filter with neighbor awareness
+  Then I should get:
+   | * | 1 | 2 | * | 2 | 0 |
+   | 1 | 2 | 4 | * | 3 | 0 |
+   | 0 | 1 | * | * | 2 | 0 |

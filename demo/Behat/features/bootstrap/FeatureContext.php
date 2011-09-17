@@ -19,7 +19,7 @@ Behat\Gherkin\Node\TableNode;
  */
 class FeatureContext extends BehatContext
 {
-    protected $grid = array();
+    protected $grid;
 
     /**
      * Initializes context.
@@ -54,7 +54,6 @@ class FeatureContext extends BehatContext
         foreach ($hash as $key => $row) {
             $this->grid[$key] = $row;
         }
-
     }
 
     /**
@@ -105,7 +104,7 @@ class FeatureContext extends BehatContext
                 $xPointer = $x + $c[0] ;
                 $yPointer = $y + $c[1] ;
                 $xLimit = sizeof($grid[0]);
-                $yLimit = sizeof($grid[0]);
+                $yLimit = sizeof(array_keys($grid));
                 $out = (($xPointer < 0) || ($yPointer < 0) ||
                         ($xPointer >= $xLimit) ||
                         ($yPointer >= $yLimit) ) ? '.' : $grid[$yPointer][$xPointer] ;
@@ -130,7 +129,10 @@ class FeatureContext extends BehatContext
             };
 
             // count neighbors that are mines
-            return array_reduce($findNeighborsPerCell($grid, $x, $y), $addMines);
+            $mineCount = array_reduce($findNeighborsPerCell($grid, $x, $y), $addMines);
+
+            // if current position is a mine just output a mine
+            return ($grid[$y][$x] == "*") ? '*' : $mineCount;
         };
 
         /**
@@ -141,7 +143,7 @@ class FeatureContext extends BehatContext
             // returns the grid with counts
             $countGrid = function ($grid) use ($mineCountPerCell)
             {
-                for ($y = 0; $y < sizeof($grid[0]); $y++) {
+                for ($y = 0; $y < sizeof(array_keys($grid)); $y++) {
                     $row = null;
                     for ($x = 0; $x < sizeof($grid[0]); $x++) {
                         $row[] = $mineCountPerCell($grid, $x, $y);
