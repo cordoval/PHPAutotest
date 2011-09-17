@@ -15,19 +15,22 @@ class MineField
         $this->stenciler = $stenciler;
         $this->masker = $masker;
         $this->reducer = $reducer;
-        $this->sweeper = $seeper;
+        $this->sweeper = $sweeper;
     }
 
-    $stencil = array(
-    '0' => array(-1, -1),
-    '1' => array(-1, 0),
-    '2' => array(-1, 1),
-    '3' => array(0, -1),
-    '4' => array(0, 1),
-    '5' => array(1, -1),
-    '6' => array(1, 0),
-    '7' => array(1, 1),
-);
+    /**
+     * returns converted grid with each cell mines count
+     *
+     * @param array $grid
+     *
+     * @return array $grid_converted
+     */
+    public function gridSweep(array $grid) {
+        return $this->sweeper->sweep($grid);
+    }
+
+
+
 
 /**
  * find neighbors of a cell in $x,$y position within a $grid array
@@ -71,19 +74,5 @@ $mineCountPerCell = function ($grid, $x, $y) use ($findNeighborsPerCell)
     return ($grid[$y][$x] == "*") ? '*' : $mineCount;
 };
 
-/**
- * returns converted grid with each cell mines count
- */
-$gridSweeper = function($grid) use ($mineCountPerCell)
-{
-    for ($y = 0; $y < sizeof(array_keys($grid)); $y++) {
-        $row = null;
-        for ($x = 0; $x < sizeof($grid[0]); $x++) {
-            $row[] = $mineCountPerCell($grid, $x, $y);
-        }
-        $grid_converted[] = $row;
-    }
-    return $grid_converted;
-};
 
 }

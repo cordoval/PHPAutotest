@@ -8,6 +8,10 @@ use Behat\Gherkin\Node\PyStringNode,
 Behat\Gherkin\Node\TableNode;
 
 use MineSweeper\MineField;
+use MineSweeper\Stenciler;
+use MineSweeper\Masker;
+use MineSweeper\Reducer;
+use MineSweeper\Sweeper;
 
 //
 // Require 3rd-party libraries here:
@@ -82,7 +86,11 @@ class FeatureContext extends BehatContext
      */
     public function iRunFilterWithNeighborAwareness()
     {
-        $this->minefield = new MineField($stencil, $stencilMasker, $mineReducer, $gridSweeper);
+        $stenciler  = new Stenciler();
+        $stencilMasker = new Masker();
+        $mineReducer = new Reducer();
+        $gridSweeper = new Sweeper($mineReducer);
+        $this->minefield = new MineField($stenciler, $stencilMasker, $mineReducer, $gridSweeper);
         $this->grid = $this->mineField->gridSweep($this->grid);
     }
 
