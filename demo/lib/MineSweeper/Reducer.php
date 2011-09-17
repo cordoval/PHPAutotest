@@ -27,11 +27,11 @@ class Reducer implements ReducerInterface
         return ($grid[$y][$x] == "*") ? '*' : $mineCount;
    }
 
-   /*
+   /**
     * adds up if $cell is a '*'
     *
-    * @param $sum
-    * @param $cell
+    * @param int $sum
+    * @param string $cell
     *
     * @return value
     */
