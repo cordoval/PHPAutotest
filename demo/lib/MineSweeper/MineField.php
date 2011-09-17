@@ -10,15 +10,15 @@ class MineField
     protected $reducer;
     protected $sweeper;
 
-public __construct(StencilerInterface $stenciler, MaskerInterface $masker, ReducerInterface $reducer, SweeperInterface $sweeper)
-{
-    $this->stenciler = $stenciler;
-    $this->masker = $masker;
-    $this->reducer = $reducer;
-    $this->sweeper = $seeper;
-}
+    public function __constructor(StencilerInterface $stenciler, MaskerInterface $masker, ReducerInterface $reducer, SweeperInterface $sweeper)
+    {
+        $this->stenciler = $stenciler;
+        $this->masker = $masker;
+        $this->reducer = $reducer;
+        $this->sweeper = $seeper;
+    }
 
-$stencil = array(
+    $stencil = array(
     '0' => array(-1, -1),
     '1' => array(-1, 0),
     '2' => array(-1, 1),
