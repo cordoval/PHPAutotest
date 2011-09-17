@@ -81,7 +81,7 @@ class FeatureContext extends BehatContext
     public function iRunFilterWithNeighborAwareness()
     {
 
-        $coords = array(
+        $stencil = array(
             '0' => array(-1, -1),
             '1' => array(-1, 0),
             '2' => array(-1, 1),
@@ -95,11 +95,11 @@ class FeatureContext extends BehatContext
         /**
          * find neighbors of a cell in $x,$y position within a $grid array
          */
-        $findNeighborsPerCell = function ($grid, $x, $y) use ($coords)
+        $findNeighborsPerCell = function ($grid, $x, $y) use ($stencil)
         {
 
             // gets the numeral on each neighbor coordinate
-            $callbackCoords = function ($c) use ($grid, $x, $y)
+            $stencilMasker = function ($c) use ($grid, $x, $y)
             {
                 $xPointer = $x + $c[0] ;
                 $yPointer = $y + $c[1] ;
@@ -112,8 +112,7 @@ class FeatureContext extends BehatContext
             };
 
             // map-processes and returns the array of neighbors numerals
-            return array_map($callbackCoords, $coords);
-
+            return array_map($stencilMasker, $stencil);
         };
 
         /**
