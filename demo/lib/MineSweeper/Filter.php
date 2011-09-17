@@ -20,9 +20,9 @@ class Filter implements FilterInterface
      * @param int $x
      * @param int $y
      * 
-     * @return value
+     * @return array
      */
-    public function process(array $grid, int $x, int $y) {
+    public function process(array $grid, $x, $y) {
         $this->x = $x;
         $this->y = $y;
         $this->grid = $grid;
@@ -38,7 +38,7 @@ class Filter implements FilterInterface
      *
      * @return value
      */
-    public function stencilMask(int $c)
+    public function stencilMask($c)
     {
         $xPointer = $this->x + $c[0];
         $yPointer = $this->y + $c[1];

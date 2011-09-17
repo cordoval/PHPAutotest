@@ -3,5 +3,23 @@ namespace MineSweeper;
 
 interface FilterInterface
 {
-    function process(array $grid, int $x, int $y);
+    /**
+     * find neighbors of a cell in $x,$y position within a $grid array
+     *
+     * @param array $grid
+     * @param int $x
+     * @param int $y
+     *
+     * @return array
+     */
+    function process(array $grid, $x, $y);
+
+    /**
+     * gets the numeral on each neighbor coordinate
+     *
+     * @param int $c
+     *
+     * @return value
+     */
+    function stencilMask($c);
 }

@@ -7,6 +7,12 @@ class Sweeper implements SweeperInterface
         $this->reducer = $reducer;
     }
 
+    /**
+     * sweeps over the 2d grid mine field
+     *
+     * @param array $grid
+     * @return array
+     */
     public function sweep(array $grid) {
         for ($y = 0; $y < sizeof(array_keys($grid)); $y++) {
             $row = null;

@@ -19,7 +19,7 @@ class Reducer implements ReducerInterface
     *
     * @return value
     */
-   public function reduce(array $grid, int $x, int $y)
+   public function reduce(array $grid, $x, $y)
    {
        // count neighbors that are mines
        $arrayFiltered = $this->filter->process($grid, $x, $y);
@@ -37,7 +37,7 @@ class Reducer implements ReducerInterface
     *
     * @return value
     */
-   public function addMines(int $sum, string $cell)
+   public function addMines($sum, $cell)
    {
        return $sum += ($cell == '*') ? 1 : 0;
    }

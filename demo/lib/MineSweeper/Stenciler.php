@@ -14,6 +14,11 @@ class Stenciler implements StencilerInterface
         '7' => array(1, 1),
     );
 
+    /**
+     * gets stencil
+     * 
+     * @return stencil
+     */
     public function getStencil() {
         return $this->stencil;
    }
