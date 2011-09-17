@@ -10,12 +10,12 @@ class MineField
     protected $reducer;
     protected $sweeper;
 
-public __construct()
+public __construct(StencilerInterface $stenciler, MaskerInterface $masker, ReducerInterface $reducer, SweeperInterface $sweeper)
 {
-    $this->setStencil($stencil);
-    $this->mineField->setMasker($stencilMasker);
-    $this->mineField->setMineReducer($mineReducer);
-    $this->mineField->setGridSweeper($gridSweeper);
+    $this->stenciler = $stenciler;
+    $this->masker = $masker;
+    $this->reducer = $reducer;
+    $this->sweeper = $seeper;
 }
 
 $stencil = array(
