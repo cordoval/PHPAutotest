@@ -82,11 +82,7 @@ class FeatureContext extends BehatContext
      */
     public function iRunFilterWithNeighborAwareness()
     {
-        $this->mineField = new MineField();
-        $this->mineField->setStencil($stencil);
-        $this->mineField->setMasker($stencilMasker);
-        $this->mineField->setMineReducer($mineReducer);
-        $this->mineField->setGridSweeper($gridSweeper);
+        $this->minefield = new MineField($stencil, $stencilMasker, $mineReducer, $gridSweeper);
         $this->grid = $this->mineField->gridSweep($this->grid);
     }
 
