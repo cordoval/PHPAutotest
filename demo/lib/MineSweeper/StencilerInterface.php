@@ -6,7 +6,7 @@ interface StencilerInterface
     /**
      * gets stencil
      *
-     * @return stencil
+     * @return array
      */
     function getStencil();
 }

@@ -9,7 +9,7 @@ Behat\Gherkin\Node\TableNode;
 
 use MineSweeper\MineField;
 use MineSweeper\Stenciler;
-use MineSweeper\Masker;
+use MineSweeper\Filter;
 use MineSweeper\Reducer;
 use MineSweeper\Sweeper;
 
@@ -25,6 +25,9 @@ use MineSweeper\Sweeper;
  */
 class FeatureContext extends BehatContext
 {
+    /**
+     * @var array
+     */
     protected $grid;
 
     /**
@@ -87,11 +90,11 @@ class FeatureContext extends BehatContext
     public function iRunFilterWithNeighborAwareness()
     {
         $stenciler  = new Stenciler();
-        $stencilMasker = new Masker();
-        $mineReducer = new Reducer();
+        $stencilFilter = new Filter($stenciler);
+        $mineReducer = new Reducer($stencilFilter);
         $gridSweeper = new Sweeper($mineReducer);
-        $this->minefield = new MineField($stenciler, $stencilMasker, $mineReducer, $gridSweeper);
-        $this->grid = $this->mineField->gridSweep($this->grid);
+        $mineField = new MineField($gridSweeper);
+        $this->grid = $mineField->gridSweep($this->grid);
     }
 
 

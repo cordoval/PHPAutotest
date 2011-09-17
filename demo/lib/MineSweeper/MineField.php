@@ -4,6 +4,9 @@ namespace MineSweeper;
 
 class MineField
 {
+    /**
+     * @var \MineSweeper\SweeperInterface
+     */
     protected $sweeper;
 
     public function __construct(SweeperInterface $sweeper)

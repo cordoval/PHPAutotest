@@ -3,6 +3,9 @@ namespace MineSweeper;
 
 class Stenciler implements StencilerInterface
 {
+    /**
+     * @var array
+     */
     protected $stencil = array(
         '0' => array(-1, -1),
         '1' => array(-1, 0),
@@ -17,7 +20,7 @@ class Stenciler implements StencilerInterface
     /**
      * gets stencil
      * 
-     * @return stencil
+     * @return array
      */
     public function getStencil() {
         return $this->stencil;

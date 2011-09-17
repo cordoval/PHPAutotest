@@ -3,6 +3,9 @@ namespace MineSweeper;
 
 class Reducer implements ReducerInterface
 {
+    /**
+     * @var \MineSweeper\FilterInterface
+     */
     protected $filter;
     
     public function __construct(FilterInterface $filter)

@@ -3,10 +3,24 @@ namespace MineSweeper;
 
 class Filter implements FilterInterface
 {
+    /**
+     * @var \MineSweeper\StencilerInterface
+     */
     protected $stenciler;
 
+    /**
+     * @var int
+     */
     protected $x;
+
+    /**
+     * @var int
+     */
     protected $y;
+
+    /**
+     * @var int
+     */
     protected $grid;
 
     public function __construct(StencilerInterface $stenciler) {
