@@ -7,12 +7,12 @@ class Reducer implements ReducerInterface
      * @var \MineSweeper\FilterInterface
      */
     protected $filter;
-    
+
     public function __construct(FilterInterface $filter)
     {
         $this->filter = $filter;
     }
-    
+
    /**
     * returns the total mines per neighbor per grid (grid) for a cell in $x,$y position
     *

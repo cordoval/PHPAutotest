@@ -3,15 +3,28 @@
 require_once 'bootstrap.php';
 
 use MineSweeper\Sweeper;
+use MineSweeper\Reducer;
+use MineSweeper\Filter;
+use MineSweeper\Stenciler;
+
+define("PHPSPEC_INTEGRATION", true);
 
 class DescribeSweeper extends \PHPSpec\Context
 {
     function itSweepsAMineFieldRevealingMines()
     {
-        $reducerMock = \Mockery::mock('reducer object', 'alias:MineSweeper\ReducerInterface');
-        $reducerMock->shouldReceive('reduce')->withAnyArgs()->andReturn('x');
+        if (PHPSPEC_INTEGRATION) {
+            $stenciler  = new Stenciler();
+            $stencilFilter = new Filter($stenciler);
+            $reducer = new Reducer($stencilFilter);
+        } else {
+            $reducerMock = \Mockery::mock('reducer object', 'alias:MineSweeper\ReducerInterface');
+            $reducerMock->shouldReceive('reduce')->withAnyArgs()->andReturn('x');
+            $reducer = $reducerMock;
+        }
 
-        $mineSweeper = $this->spec(new Sweeper($reducerMock));
+        $mineSweeper = $this->spec(new Sweeper($reducer));
+
         $grid = array(
             array('*', '.', '.'),
             array('.', '.', '.'),
@@ -27,6 +40,13 @@ class DescribeSweeper extends \PHPSpec\Context
             array('x', 'x', 'x'),
             array('x', 'x', 'x'),
         );
-        $mineSweeper->sweep($grid)->should->be($gridMockResult);
+
+        if (PHPSPEC_INTEGRATION) {
+            $gridResult = $gridResult;
+        } else {
+            $gridResult = $gridMockResult;
+        }
+
+        $mineSweeper->sweep($grid)->should->be($gridResult);
     }
 }

@@ -29,7 +29,7 @@ class Reducer implements ReducerInterface
        $mineCount = array_reduce($arrayFiltered, array($this, 'addMines'));
 
        // if current position is a mine just output a mine else the mines count surrounding it
-       return ($grid[$y][$x] == "*") ? '*' : $mineCount;
+       return ($grid[$y][$x] == "*") ? '*' : (string) $mineCount;
    }
 
    /**
