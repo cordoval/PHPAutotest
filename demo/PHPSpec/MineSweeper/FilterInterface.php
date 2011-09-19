@@ -14,4 +14,12 @@ interface FilterInterface
      */
     function process(array $grid, $x, $y);
 
+    /**
+     * gets the numeral on each neighbor coordinate
+     *
+     * @param int $c
+     *
+     * @return value
+     */
+    function stencilMask($c);
 }
