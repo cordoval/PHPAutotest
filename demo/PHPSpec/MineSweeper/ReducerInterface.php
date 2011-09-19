@@ -14,4 +14,13 @@ interface ReducerInterface
     */
    function reduce(array $grid, $x, $y);
 
+   /**
+    * adds up if $cell is a '*'
+    *
+    * @param int $sum
+    * @param string $cell
+    *
+    * @return value
+    */
+   function addMines($sum, $cell);
 }

@@ -3,13 +3,12 @@
 require_once 'bootstrap.php';
 
 use MineSweeper\Sweeper;
-use \Mockery as m;
 
 class DescribeSweeper extends \PHPSpec\Context
 {
     function itSweepsAMineFieldRevealingMines()
     {
-        $reducerMock = m::mock('reducer object', 'alias:MineSweeper\ReducerInterface');
+        $reducerMock = \Mockery::mock('reducer object', 'alias:MineSweeper\ReducerInterface');
         $reducerMock->shouldReceive('reduce')->withAnyArgs()->andReturn('x');
 
         $mineSweeper = $this->spec(new Sweeper($reducerMock));
