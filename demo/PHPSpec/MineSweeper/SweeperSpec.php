@@ -3,13 +3,14 @@
 require_once 'bootstrap.php';
 
 use MineSweeper\Sweeper;
+use \Mockery as m;
 
 class DescribeSweeper extends \PHPSpec\Context
 {
     function itSweepsAMineFieldRevealingMines()
     {
-        $reducerMock = \Mock();
-        reduce($grid, $x, $y);
+        $reducerMock = m::mock('reducer object', 'alias:MineSweeper\ReducerInterface');
+        $reducerMock->shouldReceive('reduce')->withAnyArgs()->andReturn('x');
 
         $mineSweeper = $this->spec(new Sweeper($reducerMock));
         $grid = array(
@@ -22,6 +23,11 @@ class DescribeSweeper extends \PHPSpec\Context
             array('1', '2', '1'),
             array('0', '1', '*'),
         );
-        $mineSweeper->sweep($grid)->should->be($gridResult);
+        $gridWrongResult = array(
+            array('x', 'x', 'x'),
+            array('x', 'x', 'x'),
+            array('x', 'x', 'x'),
+        );
+        $mineSweeper->sweep($grid)->should->be($gridWrongResult);
     }
 }
