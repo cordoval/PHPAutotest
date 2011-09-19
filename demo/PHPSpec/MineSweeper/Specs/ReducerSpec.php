@@ -1,6 +1,6 @@
 <?php
 
-require_once 'bootstrap.php';
+require_once __DIR__ . '/../../bootstrap.php';
 
 use MineSweeper\Reducer;
 
@@ -32,7 +32,7 @@ class DescribeReducer extends \PHPSpec\Context
         $this->x = 1;
         $this->y = 1;
 
-        $this->stencilReducer->reduce($this->grid, $this->x, $this->y)->should->be(2);
+        $this->stencilReducer->reduce($this->grid, $this->x, $this->y)->should->be('2');
     }
 
     function itReducesA3x3StencilOnXYGridIntoAMineWhenOnAMine()
