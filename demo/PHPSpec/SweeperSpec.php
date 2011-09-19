@@ -1,15 +1,14 @@
 <?php
 
-//require_once __DIR__ . '/../../demo/lib/MineSweeper/MineField.php';
-require_once __DIR__ . '/../../demo/PHPSpec/MineField.php';
+require_once __DIR__ . '/../../demo/PHPSpec/Sweeper.php';
 
-use MineSweeper\MineField;
+use MineSweeper\Sweeper;
 
-class DescribeMineField extends \PHPSpec\Context
+class DescribeSweeper extends \PHPSpec\Context
 {
     function itSweepsAMineFieldRevealingMines()
     {
-        $mineField = $this->spec(new MineField);
+        $mineSweeper = $this->spec(new Sweeper());
         $grid = array(
             array('*', '.', '.'),
             array('.', '.', '.'),
@@ -20,6 +19,6 @@ class DescribeMineField extends \PHPSpec\Context
             array('1', '2', '1'),
             array('0', '1', '*'),
         );
-        $mineField->gridSweep($grid)->should->be($gridResult);
+        $mineSweeper->sweep($grid)->should->be($gridResult);
     }
 }
