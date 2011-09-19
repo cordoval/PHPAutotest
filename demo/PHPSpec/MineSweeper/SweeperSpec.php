@@ -23,11 +23,11 @@ class DescribeSweeper extends \PHPSpec\Context
             array('1', '2', '1'),
             array('0', '1', '*'),
         );
-        $gridWrongResult = array(
+        $gridMockResult = array(
             array('x', 'x', 'x'),
             array('x', 'x', 'x'),
             array('x', 'x', 'x'),
         );
-        $mineSweeper->sweep($grid)->should->be($gridWrongResult);
+        $mineSweeper->sweep($grid)->should->be($gridMockResult);
     }
 }
