@@ -8,10 +8,10 @@ use Behat\Gherkin\Node\PyStringNode,
 Behat\Gherkin\Node\TableNode;
 
 require_once 'bootstrap.php';
-require_once 'Stenciler.php';
+/*require_once 'Stenciler.php';
 require_once 'Filter.php';
 require_once 'Reducer.php';
-require_once 'Sweeper.php';
+require_once 'Sweeper.php';*/
 
 use MineSweeper\MineField;
 use MineSweeper\Stenciler;
