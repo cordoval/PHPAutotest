@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../demo/PHPSpec/Sweeper.php';
+require_once 'bootstrap.php';
 
 use MineSweeper\Sweeper;
 
@@ -8,7 +8,10 @@ class DescribeSweeper extends \PHPSpec\Context
 {
     function itSweepsAMineFieldRevealingMines()
     {
-        $mineSweeper = $this->spec(new Sweeper());
+        $reducerMock = \Mock();
+        reduce($grid, $x, $y);
+
+        $mineSweeper = $this->spec(new Sweeper($reducerMock));
         $grid = array(
             array('*', '.', '.'),
             array('.', '.', '.'),
